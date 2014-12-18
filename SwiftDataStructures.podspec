@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   s.name = 'SwiftDataStructures'
   s.version = '0.0.1'
   s.license = 'WTFPL'
-  s.summary = "A few basic data structures that aren't present in the Swift standard library (linked list, stack, etc.)."
+  s.summary = 'Basic data structures (LinkedList, Queue, Stack) that the Swift stdlib probably should have.'
   s.authors = { 'bryn austin bellomy' => 'bryn.bellomy@gmail.com' }
   s.license = { :type => 'WTFPL', :file => 'LICENSE.md' }
   s.homepage = 'https://github.com/brynbellomy/SwiftDataStructures'
