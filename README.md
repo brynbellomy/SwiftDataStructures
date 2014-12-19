@@ -66,11 +66,18 @@ for node in list {
 }
 ```
 
+A list also maintains `first` and `last` pointers:
+
+```swift
+list.first // an optional LinkedListNode<T>
+list.last  // an optional LinkedListNode<T>
+```
+
 ### Finding a particular item
 
 ```swift
-let foundNode = list.find { $0.item == 1337 }
-foundNode.item // == 1337
+let foundNode = list.find { $0.item == 1337 } // returns an optional LinkedListNode<T>
+foundNode?.item // == 1337 (or nil if the node wasn't found)
 ```
 
 
