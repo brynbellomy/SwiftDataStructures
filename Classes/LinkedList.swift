@@ -21,14 +21,40 @@ public struct LinkedList<T>
 
     public private(set) var count: Index.Distance = 0
 
+
     public init() {
     }
+
 
     public init<S : SequenceType where S.Generator.Element == T>(_ elements:S) {
         let mapped = map(elements) { NodeType($0) }
         extend(mapped)
     }
 
+
+    /**
+        Returns the element at the specified index, or nil if the index was out of range.
+     */
+    public func at(index:Index) -> Generator.Element?
+    {
+        if index < startIndex || index > endIndex.predecessor() {
+            return nil
+        }
+
+        var generator = generate()
+        var current   = first
+
+        for i in startIndex ... index {
+            current = generator.next()
+        }
+
+        return current!
+    }
+
+
+    /**
+        Returns the first element for which `predicate` returns true.
+     */
     public func find(predicate: (LinkedListNode<T>) -> Bool) -> Index?
     {
         for (i, elem) in enumerate(self) {
@@ -40,21 +66,43 @@ public struct LinkedList<T>
     }
 
 
-    public mutating func prepend(newElement:NodeType)
+    /**
+        Inserts the provided element at the beginning of the list.
+     */
+    public mutating func prepend(newElement:NodeType) {
+        insert(newElement, atIndex:startIndex)
+    }
+
+
+    /**
+        Inserts the provided element at the specified index of the list.  The index must be >= startIndex and <= endIndex.  Insert can therefore be used to append and prepend elements to the list (and, in fact, `append` and `prepend` simply call this function).
+     */
+    public mutating func insert(newElement:NodeType, atIndex index:Index)
     {
+        precondition(index >= startIndex && index <= endIndex)
+
         newElement.previous = nil
         newElement.next = nil
 
-        if let currentFirst = first?
-        {
-            newElement.next = currentFirst
-            currentFirst.previous = newElement
+        let currentElementAtPosition = at(index)
+        let elementBefore = currentElementAtPosition?.previous ?? at(index.predecessor()) ?? nil
+
+        currentElementAtPosition?.previous = newElement
+        elementBefore?.next = newElement
+
+        newElement.next = currentElementAtPosition
+        newElement.previous = elementBefore
+
+        // update first
+        if index == startIndex {
+            first = newElement
         }
-        else {
+
+        // update last
+        if index == endIndex {
             last = newElement
         }
 
-        first = newElement
         ++count
     }
 
@@ -166,14 +214,8 @@ extension LinkedList : MutableCollectionType
         get {
             precondition(index >= startIndex && index <= endIndex.predecessor(), "index is out of range.")
 
-            var generator = generate()
-            var current   = first
-
-            for i in startIndex ... index {
-                current = generator.next()
-            }
-
-            return current!
+            let node = at(index)
+            return node!
         }
         set {
             precondition(index >= startIndex && index <= endIndex.predecessor(), "index is out of range.")
@@ -210,21 +252,8 @@ extension LinkedList : ExtensibleCollectionType
         // no-op
     }
 
-    public mutating func append(newElement:NodeType)
-    {
-        newElement.next = nil
-        newElement.previous = nil
-
-        if let currentLast = last? {
-            currentLast.next = newElement
-            newElement.previous = currentLast
-        }
-        else {
-            first = newElement
-        }
-
-        last = newElement
-        ++count
+    public mutating func append(newElement:NodeType) {
+        insert(newElement, atIndex:endIndex)
     }
 
 

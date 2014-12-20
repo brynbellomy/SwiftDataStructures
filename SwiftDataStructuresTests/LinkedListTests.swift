@@ -91,6 +91,21 @@ class LinkedListMutatingTests : XCTestCase
         XCTAssert(list.last?.item  == 30)
     }
 
+    func testInsert()
+    {
+        var list : LinkedList<Int> = [10, 30]
+
+        let index = 1
+        list.insert(LinkedListNode(20), atIndex:index)
+
+        XCTAssert(list.count == 3)
+        XCTAssert(list[0].item == 10)
+        XCTAssert(list[1].item == 20)
+        XCTAssert(list[2].item == 30)
+        XCTAssert(list.first?.item == 10)
+        XCTAssert(list.last?.item  == 30)
+    }
+
     func testRemoveAtIndexFirst()
     {
         var list : LinkedList<Int> = [10, 20, 30]

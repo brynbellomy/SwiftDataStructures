@@ -56,6 +56,16 @@ public class LinkedListNode<T>
 ```
 
 
+### Accessing elements
+
+`LinkedList` defines a subscript getter as well as `func at(index:Index) -> LinkedListNode<T>` for accessing elements at particular indices.  The subscript operator will fail when passed an out-of-bounds index, while `at()` will simply return `nil`.
+
+```swift
+let someNode = list[2]
+let someNode = list.at(2)
+```
+
+
 ### Traversing the list
 
 `LinkedList` implements `SequenceType`, allowing you to use `for...in` loops, among many other things.
@@ -90,6 +100,7 @@ Adding new elements (`append` and `prepend`):
 ```swift
 list.append(LinkedListNode(30))
 list.prepend(LinkedListNode(30))
+list.insert(LinkedListNode(30), atIndex:5)
 ```
 
 Removing elements:
