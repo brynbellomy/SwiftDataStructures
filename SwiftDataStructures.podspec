@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'SwiftDataStructures'
-  s.version = '0.0.2'
+  s.version = '0.0.3'
   s.license = 'WTFPL'
   s.summary = 'Basic data structures (LinkedList, Queue, Stack) that the Swift stdlib probably should have.'
   s.authors = { 'bryn austin bellomy' => 'bryn.bellomy@gmail.com' }
