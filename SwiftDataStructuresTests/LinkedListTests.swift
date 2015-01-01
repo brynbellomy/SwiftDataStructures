@@ -42,6 +42,19 @@ class LinkedListTests: XCTestCase
         XCTAssert(list[1].item == 20)
         XCTAssert(list[2].item == 30)
     }
+
+    func testGeneratorOrder()
+    {
+        let list : LinkedList<Int> = [10, 20, 30]
+        var array = [Int]()
+        for node in list {
+            array.append(node.item)
+        }
+        XCTAssert(array.count == 3)
+        XCTAssert(array[0] == 10)
+        XCTAssert(array[1] == 20)
+        XCTAssert(array[2] == 30)
+    }
 }
 
 

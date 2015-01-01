@@ -11,6 +11,30 @@ import XCTest
 import SwiftDataStructures
 
 
+class StackIndexTests: XCTestCase
+{
+    func testStackIndex() {
+        var stack = Stack<Int>()
+        stack.push(10)
+        stack.push(20)
+        stack.push(30)
+        stack.push(40)
+        stack.push(50)
+
+        let index : Stack<Int>.Index = 1
+        XCTAssertEqual(stack[index], 40)
+        XCTAssertEqual(stack[index], stack[1])
+
+        let index2 = Stack<Int>.Index(3)
+        XCTAssertEqual(stack[index2], 20)
+        XCTAssertEqual(stack[index2], stack[3])
+
+        XCTAssertEqual(stack[stack.startIndex], stack.top!)
+        XCTAssertEqual(stack[stack.endIndex.predecessor()], stack.bottom!)
+    }
+}
+
+
 class StackTests: XCTestCase
 {
     func testEmptyInitializer()
@@ -21,7 +45,7 @@ class StackTests: XCTestCase
 
     func testSequenceInitializer()
     {
-        let stack = Stack<Int>(SequenceOf([30, 20, 10]))
+        let stack = Stack<Int>(SequenceOf([10, 20, 30]))
 
         XCTAssert(stack.count == 3)
         XCTAssert(stack[0] == 10)
@@ -31,7 +55,7 @@ class StackTests: XCTestCase
 
     func testArrayLiteralConvertible()
     {
-        let stack : Stack<Int> = [30, 20, 10]
+        let stack : Stack<Int> = [10, 20, 30]
         XCTAssert(stack.count == 3)
         XCTAssert(stack[0] == 10)
         XCTAssert(stack[1] == 20)
@@ -40,16 +64,42 @@ class StackTests: XCTestCase
 
     func testFrontAndBackProperties()
     {
-        let stack : Stack<Int> = [30, 20, 10]
-        XCTAssert(stack.top == 10)
+        let stack : Stack<Int> = [10, 20, 30]
+        XCTAssertEqual(stack.top!, 10)
         XCTAssert(stack.bottom  == 30)
+    }
+
+    func testGeneratorOrder()
+    {
+        let stack : Stack<Int> = [10, 20, 30]
+        var array = [Int]()
+        for item in stack {
+            array.append(item)
+        }
+        XCTAssert(array.count == 3)
+        XCTAssert(array[0] == 10)
+        XCTAssert(array[1] == 20)
+        XCTAssert(array[2] == 30)
+    }
+
+    func testOperators() {
+        let stack1: Stack<Int> = [30, 40]
+        let stack2: Stack<Int> = [10, 20] + stack1 + [50]
+        XCTAssert(stack2.count == 5)
+        XCTAssertEqual(stack2.top!, stack2[0])
+        XCTAssertEqual(stack2[0], 10)
+        XCTAssertEqual(stack2[1], 20)
+        XCTAssertEqual(stack2[2], 30)
+        XCTAssertEqual(stack2[3], 40)
+        XCTAssertEqual(stack2[4], 50)
+        XCTAssertEqual(stack2.bottom!, stack2[4])
     }
 }
 
 
 class StackMutatingTests : XCTestCase
 {
-    func testEnstack()
+    func testPush()
     {
         var stack = Stack<Int>()
         stack.push(30)
@@ -64,14 +114,14 @@ class StackMutatingTests : XCTestCase
         XCTAssert(stack[2] == 30)
     }
 
-    func testDestack()
+    func testPop()
     {
-        var stack : Stack<Int> = [30, 20, 10]
+        var stack : Stack<Int> = [10, 20, 30]
         let element = stack.top!
-        let removed  = stack.pop()!
+        let removed = stack.pop()!
 
         XCTAssert(removed == element)
-        XCTAssert(removed == 10)
+        XCTAssertEqual(removed, 10)
         XCTAssert(stack.count == 2)
         XCTAssert(stack.top == 20)
         XCTAssert(stack.bottom  == 30)
@@ -83,9 +133,9 @@ class StackMutatingTests : XCTestCase
     {
         var stack : Stack<Int> = [9, 8, 7]
 
-        stack[2] = 10
+        stack[2] = 30
         stack[1] = 20
-        stack[0] = 30
+        stack[0] = 10
 
         XCTAssert(stack.count == 3)
         XCTAssert(stack.top == 10)
@@ -97,7 +147,7 @@ class StackMutatingTests : XCTestCase
 
     func testRemoveAtIndexFirst()
     {
-        var stack : Stack<Int> = [30, 20, 10]
+        var stack : Stack<Int> = [10, 20, 30]
 
         let index = 0
         let element = stack[index]
@@ -114,7 +164,7 @@ class StackMutatingTests : XCTestCase
 
     func testRemoveAtIndexN()
     {
-        var stack : Stack<Int> = [30, 20, 10]
+        var stack : Stack<Int> = [10, 20, 30]
 
         let index = 1
         let element = stack[index]
@@ -131,7 +181,7 @@ class StackMutatingTests : XCTestCase
 
     func testRemoveAtIndexLast()
     {
-        var stack : Stack<Int> = [30, 20, 10]
+        var stack : Stack<Int> = [10, 20, 30]
 
         let index = 2
         let element = stack[index]

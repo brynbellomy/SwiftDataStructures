@@ -60,12 +60,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		38D35AC043E2696BE1C5F3A6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C5EEEB031A422B7600C5260C = {
 			isa = PBXGroup;
 			children = (
 				C5EEEB0F1A422B7600C5260C /* SwiftDataStructures */,
 				C5EEEB1C1A422B7600C5260C /* SwiftDataStructuresTests */,
 				C5EEEB0E1A422B7600C5260C /* Products */,
+				38D35AC043E2696BE1C5F3A6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

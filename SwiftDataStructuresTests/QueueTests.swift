@@ -44,6 +44,19 @@ class QueueTests: XCTestCase
         XCTAssert(queue.front == 10)
         XCTAssert(queue.back  == 30)
     }
+
+    func testGeneratorOrder()
+    {
+        let queue : Queue<Int> = [10, 20, 30]
+        var array = [Int]()
+        for item in queue {
+            array.append(item)
+        }
+        XCTAssert(array.count == 3)
+        XCTAssert(array[0] == 10)
+        XCTAssert(array[1] == 20)
+        XCTAssert(array[2] == 30)
+    }
 }
 
 
