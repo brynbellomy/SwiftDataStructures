@@ -6,6 +6,41 @@
 //  Copyright (c) 2014 bryn austin bellomy. All rights reserved.
 //
 
+public struct StackIndex<T> : BidirectionalIndexType, Comparable, IntegerLiteralConvertible
+{
+    public typealias RawIndex = Stack<T>.UnderlyingCollection.Index
+    private typealias UnderlyingIndex = Stack<T>.UnderlyingCollection.Index
+
+    private let value : RawIndex
+    public init(_ v: RawIndex) {
+        value = v
+    }
+
+    public func underlyingIndexForEndIndex(endIndex:Stack<T>.UnderlyingCollection.Index) -> Stack<T>.UnderlyingCollection.Index {
+        return endIndex.predecessor() - value
+    }
+
+    public init(integerLiteral value:Int) {
+        self.init(value)
+    }
+
+    public func successor() -> StackIndex<T> {
+        return StackIndex<T>(value.successor())
+    }
+
+    public func predecessor() -> StackIndex<T> {
+        return StackIndex<T>(value.predecessor())
+    }
+}
+
+public func == <T>(lhs: StackIndex<T>, rhs: StackIndex<T>) -> Bool {
+    return lhs.value == rhs.value
+}
+
+public func < <T>(lhs:StackIndex<T>, rhs: StackIndex<T>) -> Bool {
+    return lhs.value < rhs.value
+}
+
 
 //
 // MARK: - struct Stack<T> -
@@ -13,8 +48,9 @@
 
 public struct Stack<T>
 {
+
     public   typealias Element = T
-    internal typealias UnderlyingCollection = LinkedList<T>
+    internal typealias UnderlyingCollection = LinkedList<Element>
 
     private var elements = UnderlyingCollection()
 
@@ -27,9 +63,9 @@ public struct Stack<T>
     }
 
     /**
-        Element order is [bottom, ..., top], as if one were to iterate through the sequence in forward order, calling `stack.push(element)` on each element.
+        Element order is [top, ..., bottom], as if one were to iterate through the sequence in reverse, calling `stack.push(element)` on each element.
      */
-    public init<S : SequenceType where S.Generator.Element == T>(_ elements:S) {
+    public init<S : SequenceType where S.Generator.Element == Element>(_ elements:S) {
         extend(elements)
     }
 
@@ -52,9 +88,45 @@ public struct Stack<T>
         return (count > 0) ? removeTop() : nil
     }
 
-    public func find(predicate: (Element) -> Bool) -> Index? {
-        return elements.find { predicate($0.item) }
+
+    /**
+        Returns the element at the specified index, or nil if the index was out of range.
+     */
+    public func at(index i:Int) -> Element? {
+        let underlyingIndex = Index(i).underlyingIndexForEndIndex(elements.endIndex)
+        return elements.at(underlyingIndex)?.item
     }
+
+
+    /**
+        Returns the index of the first element for which `predicate` returns true.
+     */
+    public func find(predicate: (Element) -> Bool) -> Index? {
+        for (i, elem) in enumerate(self) {
+            if predicate(elem) == true {
+                return Index(i)
+            }
+        }
+        return nil
+    }
+
+
+    /**
+        Inserts the provided element `n` positions from the top of the stack.  The index must be >= startIndex and <= endIndex or a precondition will fail.  Insert can therefore be used to append and prepend elements to the list (and, in fact, `append` and `prepend` simply call this function).
+    */
+    public mutating func insert(newElement:Element, atIndex i:Index.RawIndex) {
+        insert(newElement, atIndex:Index(i))
+    }
+
+    public mutating func insert(newElement:Element, atIndex index:Index)
+    {
+        precondition(index >= startIndex && index <= endIndex)
+
+        let elem = UnderlyingCollection.NodeType(newElement)
+        let underlyingIndex = index.underlyingIndexForEndIndex(elements.endIndex)
+        elements.insert(elem, atIndex:underlyingIndex)
+    }
+
 
     /**
         Removes the element `n` positions from the top of the stack and returns it.  `index` must be a valid index or a precondition assertion will fail.
@@ -62,9 +134,16 @@ public struct Stack<T>
         :param: index The index of the element to remove.
         :returns: The removed element.
      */
-    public mutating func removeAtIndex(index:Index) -> Element {
+    public mutating func removeAtIndex(index:Index) -> Element
+    {
         precondition(index >= startIndex && index <= endIndex.predecessor(), "index (\(index)) is out of range [startIndex = \(startIndex), endIndex = \(endIndex), count = \(count)].")
-        return elements.removeAtIndex(endIndex.predecessor() - index).item
+
+        let underlyingIndex = index.underlyingIndexForEndIndex(elements.endIndex)
+        return elements.removeAtIndex(underlyingIndex).item
+    }
+
+    public mutating func removeAtIndex(index:Index.RawIndex) -> Element {
+        return removeAtIndex(Index(index))
     }
 
     /**
@@ -76,6 +155,10 @@ public struct Stack<T>
         precondition(count > 0, "Cannot removeTop() from an empty Stack.")
         return elements.removeLast().item
     }
+
+//    private func indexInUnderlyingCollection(index:Index) -> UnderlyingCollection.Index {
+//        return elements.endIndex.predecessor() - index
+//    }
 }
 
 
@@ -86,10 +169,10 @@ public struct Stack<T>
 
 extension Stack : SequenceType
 {
-    public typealias Generator = GeneratorOf<T>
+    public typealias Generator = GeneratorOf<Element>
     public func generate() -> Generator
     {
-        var generator = elements.generate()
+        var generator = reverse(elements).generate()
         return GeneratorOf {
             return generator.next()?.item
         }
@@ -104,22 +187,30 @@ extension Stack : SequenceType
 
 extension Stack : MutableCollectionType
 {
-    public typealias Index = UnderlyingCollection.Index
-    public var startIndex : Index { return elements.startIndex }
-    public var endIndex   : Index { return elements.endIndex }
+    public typealias Index = StackIndex<T>
+    public var startIndex : Index { return StackIndex(elements.startIndex) }
+    public var endIndex   : Index { return StackIndex(elements.endIndex) }
 
     /**
         Subscript `n` corresponds to the element that is `n` positions from the top of the stack.  Subscript 0 always corresponds to the top element.
      */
-    public subscript(position:Index) -> Generator.Element
+    public subscript(index:Index) -> Element
     {
         get {
-            return reverse(elements)[position].item
+            let underlyingIndex = index.underlyingIndexForEndIndex(elements.endIndex)
+            return elements[underlyingIndex].item
         }
         set {
+            let underlyingIndex = index.underlyingIndexForEndIndex(elements.endIndex)
             let newNode = UnderlyingCollection.NodeType(newValue)
-            elements[position] = newNode
+            elements[underlyingIndex] = newNode
         }
+    }
+
+    public subscript(index:Index.RawIndex) -> Element
+    {
+        get { return self[ Index(index) ] }
+        set { self[ Index(index) ] = newValue }
     }
 }
 
@@ -136,19 +227,21 @@ extension Stack : ExtensibleCollectionType
     }
 
     /**
-        This method is simply an alias for `push()`, included for `ExtensibleCollectionType` conformance.
+        Appends an element to the bottom of the stack.  Included for `ExtensibleCollectionType` conformance.
      */
     public mutating func append(newElement:Element) {
-        push(newElement)
+        elements.prepend(LinkedListNode(newElement))
     }
 
 
     /**
-        Element order is [bottom, ..., top], as if one were to iterate through the sequence in forward order, calling `stack.push(element)` on each element.
+        Element order is [top, ..., bottom], as if one were to iterate through the sequence in reverse, calling `stack.append(element)` on each element.
      */
     public mutating func extend<S : SequenceType where S.Generator.Element == Element>(sequence: S) {
-        let wrapped = map(sequence) { UnderlyingCollection.NodeType($0) }
-        elements.extend(wrapped)
+        // Note that this should just be "for item in reverse(sequence)"; this is working around a compiler crash.
+        for elem in [Element](sequence) {
+            append(elem)
+        }
     }
 }
 
@@ -161,12 +254,15 @@ extension Stack : ExtensibleCollectionType
 extension Stack : ArrayLiteralConvertible
 {
     /**
-        Element order is [bottom, ..., top], as if one were to iterate through the sequence in forward order, calling `stack.push(element)` on each element.
+        Element order is [top, ..., bottom], as if one were to iterate through the sequence in reverse, calling `stack.push(element)` on each element.
      */
     public init(arrayLiteral elements: Element...) {
         extend(elements)
     }
 }
+
+
+
 
 
 
