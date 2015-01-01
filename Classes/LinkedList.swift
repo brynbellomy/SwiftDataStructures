@@ -14,7 +14,6 @@
 public struct LinkedList<T>
 {
     public typealias NodeType = LinkedListNode<T>
-//    public typealias Element  = NodeType
 
     public private(set) var first: NodeType?
     public private(set) var last:  LinkedListNode<T>?
@@ -53,7 +52,7 @@ public struct LinkedList<T>
 
 
     /**
-        Returns the first element for which `predicate` returns true.
+        Returns the index of the first element for which `predicate` returns true.
      */
     public func find(predicate: (LinkedListNode<T>) -> Bool) -> Index?
     {
