@@ -1,0 +1,5 @@
+[
+  "-workspace", "SwiftDataStructures.xcworkspace",
+  "-scheme", "SwiftDataStructures",
+  "-configuration", "Debug"
+]

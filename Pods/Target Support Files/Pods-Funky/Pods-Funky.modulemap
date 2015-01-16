@@ -1,0 +1,6 @@
+framework module Funky {
+  umbrella header "Pods-Funky-umbrella.h"
+
+  export *
+  module * { export * }
+}

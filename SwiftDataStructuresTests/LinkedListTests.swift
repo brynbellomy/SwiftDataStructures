@@ -7,62 +7,75 @@
 //
 
 import Cocoa
-import XCTest
+import Quick
+import Nimble
 import SwiftDataStructures
+import Funky
+import Respect
 
 
-class LinkedListTests: XCTestCase
+class LinkedListTests: QuickSpec
 {
-    func testEmptyInitializer()
+    override func spec()
     {
-        let list = LinkedList<Int>()
-        XCTAssert(list.count == 0)
-    }
+        typealias CollectionSpec = CollectionTypeSpec<LinkedListType>
+        typealias SequenceSpec   =   SequenceTypeSpec<LinkedListType>
+//        typealias ListSpec       =       ListTypeSpec<LinkedListType>
 
-    func testSequenceInitializer()
-    {
-        let list = LinkedList<Int>(SequenceOf([10, 20, 30]))
+        describe("a new LinkedList") {
 
-        XCTAssert(list.count == 3)
-        XCTAssert(list.first?.item == 10)
-        XCTAssert(list.last?.item  == 30)
-        XCTAssert(list[0].item == 10)
-        XCTAssert(list[1].item == 20)
-        XCTAssert(list[2].item == 30)
-    }
+            context("initialized empty") {
+                let list = LinkedListType()
 
-    func testArrayLiteralConvertible()
-    {
-        let list : LinkedList<Int> = [10, 20, 30]
+                itBehavesLike(.LinkedList) <| LinkedListSpec.Args(list, shouldMatch:[])
+            }
 
-        XCTAssert(list.count == 3)
-        XCTAssert(list.first?.item == 10)
-        XCTAssert(list.last?.item  == 30)
-        XCTAssert(list[0].item == 10)
-        XCTAssert(list[1].item == 20)
-        XCTAssert(list[2].item == 30)
-    }
+            context("initialized from an array literal") {
+                let list: LinkedListType = [ "one", "two", "three", ]
 
-    func testGeneratorOrder()
-    {
-        let list : LinkedList<Int> = [10, 20, 30]
-        var array = [Int]()
-        for node in list {
-            array.append(node.item)
+                itBehavesLike(.LinkedList) <| LinkedListSpec.Args(list, shouldMatch:[(0, Node1), (1, Node2), (2, Node3),])
+            }
+
+            context("initialized from a sequence of LinkedListNodes") {
+                let seq  = SequenceOf([ Node1, Node2, Node3, ])
+                var list = LinkedListType(seq)
+
+                itBehavesLike(.LinkedList) <| LinkedListSpec.Args(list, shouldMatch:[(0, Node1), (1, Node2), (2, Node3),])
+            }
+
+            context("initialized from a sequence of Ts") {
+                let arr  =  [ "one", "two", "three", ]
+                var list = LinkedListType(elements:SequenceOf(arr))
+
+                itBehavesLike(.LinkedList) <| LinkedListSpec.Args(list, shouldMatch:[(0, Node1), (1, Node2), (2, Node3),])
+            }
         }
-        XCTAssert(array.count == 3)
-        XCTAssert(array[0] == 10)
-        XCTAssert(array[1] == 20)
-        XCTAssert(array[2] == 30)
+
+        describe("a LinkedList") {
+            it("returns the correct indices when find() is called and an element satisfies predicate") {
+                let list: LinkedListType = [ "one", "two", "three", ]
+                let node = list[1]
+                let index = list.find { $0 === node }
+                expect(index) == 1
+            }
+
+            it("returns nil when find() is called and no elements satisfy the predicate") {
+                let list: LinkedListType = [ "one", "two", "three", ]
+                let index = list.find { $0.item == "xyzzy" }
+                expect(index).to(beNil())
+            }
+
+        }
     }
 }
 
 
+// @@TODO: convert these to Quick/Nimble/Respect
 class LinkedListMutatingTests : XCTestCase
 {
     func testSubscriptSetter()
     {
-        var list : LinkedList<Int> = [9, 8, 7]
+        var list: LinkedList<Int> = [9, 8, 7]
 
         list[0] = LinkedListNode(10)
         list[1] = LinkedListNode(20)
@@ -78,7 +91,7 @@ class LinkedListMutatingTests : XCTestCase
 
     func testAppend()
     {
-        var list : LinkedList<Int> = [10, 20]
+        var list: LinkedList<Int> = [10, 20]
 
         list.append(LinkedListNode(30))
 
@@ -92,7 +105,7 @@ class LinkedListMutatingTests : XCTestCase
 
     func testPrepend()
     {
-        var list : LinkedList<Int> = [20, 30]
+        var list: LinkedList<Int> = [20, 30]
 
         list.prepend(LinkedListNode(10))
 
@@ -106,7 +119,7 @@ class LinkedListMutatingTests : XCTestCase
 
     func testInsert()
     {
-        var list : LinkedList<Int> = [10, 30]
+        var list: LinkedList<Int> = [10, 30]
 
         let index = 1
         list.insert(LinkedListNode(20), atIndex:index)
@@ -121,7 +134,7 @@ class LinkedListMutatingTests : XCTestCase
 
     func testRemoveAtIndexFirst()
     {
-        var list : LinkedList<Int> = [10, 20, 30]
+        var list: LinkedList<Int> = [10, 20, 30]
 
         let index = 0
         let element = list[index]
@@ -138,7 +151,7 @@ class LinkedListMutatingTests : XCTestCase
 
     func testRemoveAtIndexN()
     {
-        var list : LinkedList<Int> = [10, 20, 30]
+        var list: LinkedList<Int> = [10, 20, 30]
 
         let index = 1
         let element = list[index]
@@ -155,7 +168,7 @@ class LinkedListMutatingTests : XCTestCase
 
     func testRemoveAtIndexLast()
     {
-        var list : LinkedList<Int> = [10, 20, 30]
+        var list: LinkedList<Int> = [10, 20, 30]
 
         let index = 2
         let element = list[index]
@@ -169,7 +182,28 @@ class LinkedListMutatingTests : XCTestCase
         XCTAssert(list[0].item == 10)
         XCTAssert(list[1].item == 20)
     }
+
+    func testSplice()
+    {
+        var list: LinkedListType = [Node1.item, Node2.item, Node3.item,]
+        let newElements: LinkedListType = [Node4.item, Node1.item,]
+
+        list.splice(newElements, atIndex:1)
+        let expected: LinkedListType = [Node1.item, Node4.item, Node1.item, Node2.item, Node3.item]
+        XCTAssert(list == expected)
+    }
 }
+
+
+
+
+
+private typealias Node = LinkedListType.NodeType
+private let Node1 = Node("one")
+private let Node2 = Node("two")
+private let Node3 = Node("three")
+private let Node4 = Node("four")
+
 
 
 

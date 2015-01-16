@@ -263,6 +263,20 @@ extension Stack : ArrayLiteralConvertible
 
 
 
+//
+// MARK: - Stack: Printable, DebugPrintable
+//
+
+extension Stack: Printable, DebugPrintable
+{
+    public var description: String {
+        let arr = Array(self)
+        return arr.description
+    }
+
+    public var debugDescription: String { return description }
+}
+
 
 
 
