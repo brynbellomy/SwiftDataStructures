@@ -1,6 +1,0 @@
-framework module Respect {
-  umbrella header "Pods-SwiftDataStructuresTests-Respect-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -1,0 +1,8 @@
+
+language: objective-c
+osx_image: xcode61
+script:
+    - xctool -workspace Respect.xcworkspace -scheme Respect build
+    # NOTE: leaving out a 'test' command because i have no clue how to approach testing the tests yet
+
+    # - xctool -workspace Respect.xcworkspace -scheme Respect_iOS -sdk iphonesimulator build test

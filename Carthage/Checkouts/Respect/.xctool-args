@@ -1,0 +1,5 @@
+[
+  "-workspace", "Respect.xcworkspace",
+  "-scheme", "Respect",
+  "-configuration", "Debug"
+]

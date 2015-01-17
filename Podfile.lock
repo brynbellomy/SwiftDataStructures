@@ -2,41 +2,13 @@ PODS:
   - Funky (0.1.1):
     - LlamaKit (= 0.1.1)
   - LlamaKit (0.1.1)
-  - Nimble (0.2.0)
-  - Quick (0.2.0)
-  - Respect (0.0.1)
 
 DEPENDENCIES:
   - Funky (= 0.1.1)
   - LlamaKit (~> 0.1.x)
-  - Nimble (from `https://github.com/Quick/Nimble.git`)
-  - Quick (from `https://github.com/Quick/Quick.git`)
-  - Respect (from `https://github.com/brynbellomy/Respect`)
-
-EXTERNAL SOURCES:
-  Nimble:
-    :git: https://github.com/Quick/Nimble.git
-  Quick:
-    :git: https://github.com/Quick/Quick.git
-  Respect:
-    :git: https://github.com/brynbellomy/Respect
-
-CHECKOUT OPTIONS:
-  Nimble:
-    :commit: 21b17c1427d850ad9f5d26ebeabece8a01da7d75
-    :git: https://github.com/Quick/Nimble.git
-  Quick:
-    :commit: 2323b00bee442fd4d81c7af16df2232fd25b4f46
-    :git: https://github.com/Quick/Quick.git
-  Respect:
-    :commit: 628cffd709d64158551ac5fbfb66ca6139c9ade1
-    :git: https://github.com/brynbellomy/Respect
 
 SPEC CHECKSUMS:
   Funky: 516acfd6e8912cd5af9c7158ba612e2593b03b9c
   LlamaKit: 430d2ae678888d13fe87f8a01d0c4fb69c06eb93
-  Nimble: 79679d4cd5a3710db75e1dd9f5479f71842da6a6
-  Quick: fdcce541eb5d73f5ac78f95c770ca6d6d69f0b81
-  Respect: f42f732592edea485b19136af5d6e4260c8e519d
 
 COCOAPODS: 0.36.0.beta.1

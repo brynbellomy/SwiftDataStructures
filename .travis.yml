@@ -1,0 +1,6 @@
+
+language: objective-c
+osx_image: xcode611
+script:
+    - xctool -workspace SwiftDataStructures.xcworkspace -scheme SwiftDataStructures build test
+    # - xctool -workspace SwiftDataStructures.xcworkspace -scheme SwiftDataStructures_iOS -sdk iphonesimulator build test
