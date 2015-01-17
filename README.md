@@ -1,21 +1,46 @@
 
 # SwiftDataStructures
 
-Currently implemented:
+<img src="cookie-monster-eating-o.gif" />
 
-- `LinkedList`
-- `Stack`: Implemented using `LinkedList` rather than Swift's built-in `Array`.  Hopefully a bit faster this way.
+## install
+
+It's a [CocoaPod](http://cocoapods.org).  For the time being, only the pre-release beta of CocoaPods 0.36 is capable of working with Swift code.  To install it, use `gem install cocoapods --pre`.
+
+Podfile:
+
+```
+pod 'SwiftDataStructures'
+```
+
+Command line:
+
+```sh
+$ pod install
+```
+
+## Currently implemented:
+
+- `OrderedDictionary`: Implemented using `LinkedList` rather than one of Swift's built-in types.  Hopefully a bit faster this way.
+- `Set`: Finally!
+- `Stack`: Also implemented with a `LinkedList`.
 - `Queue`: Like `Stack`, this has also been implemented using a `LinkedList`.
+- `LinkedList` (serves as a base for a lot of the other data structures)
 
+## Forthcoming:
+
+- `OrderedSet`
+- A complete test suite
+- Performance tests
 
 Comments, ideas, and pull requests are very welcome!
 
-Everything is pretty thoroughly tested so far.
+The tests are coming along, but any contributions towards those would be awesome as well.  Even just a second set of eyes would go a long way.
 
 
-# usage
+# example usage
 
-You can check out the tests for more information (better instructions are continually evolving).  It's pretty intuitive, though.
+You can check out the tests for more information (better instructions are continually evolving).  It's all pretty intuitive, though ... the types all do pretty much what you would expect.
 
 ## LinkedList&lt;T&gt;
 
