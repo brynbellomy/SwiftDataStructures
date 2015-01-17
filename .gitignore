@@ -1,6 +1,6 @@
 Gemfile.lock
 
-!Carthage/Build/
+!Carthage/Build
 # Created by https://www.gitignore.io
 
 ### SublimeText ###
@@ -47,23 +47,6 @@ DerivedData
 # http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
 #
 # Pods/
-
-
-### Xcode ###
-build/
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-xcuserdata
-*.xccheckout
-*.moved-aside
-DerivedData
-*.xcuserstate
 
 
 ### OSX ###
