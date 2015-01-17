@@ -1,6 +1,6 @@
 Gemfile.lock
 
-!Carthage/Build
+!Carthage/Build/
 # Created by https://www.gitignore.io
 
 ### SublimeText ###
