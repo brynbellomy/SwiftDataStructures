@@ -69,15 +69,15 @@ public func equal <S: SequenceType, T: SequenceType>
 }
 
 
-/**
-    Applied to a predicate and a sequence, `any` determines if any element of the sequence
-    satisfies the predicate.  For the result to be `false`, the sequence must be finite;
-    `true`, however, results from a `true` value for the predicate applied to an element
-    at a finite index of a finite or infinite sequence.  (as described in Haskell's
-    `GHC.List`)
- */
+public func both <T, U>
+    (one:T?, two:U?) -> (T, U)?
+{
+    return rejectEitherNil((one, two))
+}
+
+
 public func any <S: SequenceType>
-    (predicate:S.Generator.Element -> Bool) (seq:S) -> Bool
+    (predicate: S.Generator.Element -> Bool) (seq: S) -> Bool
 {
     var gen = seq.generate()
     while let next = gen.next() {
@@ -89,14 +89,8 @@ public func any <S: SequenceType>
 }
 
 
-/**
-    Applied to a predicate and a sequence, `all` determines if all elements of the sequence
-    satisfy the predicate. For the result to be `true`, the sequence must be finite; `false`,
-    however, results from a `false` value for the predicate applied to an element at a finite
-    index of a finite or infinite sequence.  (as described in Haskell's `GHC.List`)
- */
 public func all <S: SequenceType>
-    (predicate:S.Generator.Element -> Bool) (seq:S) -> Bool
+    (predicate: S.Generator.Element -> Bool) (seq: S) -> Bool
 {
     var gen = seq.generate()
     while let next = gen.next() {
@@ -105,13 +99,6 @@ public func all <S: SequenceType>
         }
     }
     return true
-}
-
-
-public func both <T, U>
-    (one:T?, two:U?) -> (T, U)?
-{
-    return rejectEitherNil((one, two))
 }
 
 
@@ -139,42 +126,35 @@ public func all <T, U, V, W>
 }
 
 
-/** Returns `true` if the `Result` is a success, `false` otherwise. */
 public func isSuccess <T> (result:Result<T>) -> Bool {
     return result.isSuccess()
 }
 
 
-/** Returns `true` if the `Result` is a failure, `false` otherwise. */
 public func isFailure <T> (result:Result<T>) -> Bool {
     return !isSuccess(result)
 }
 
 
-/** Returns `result.value` if `result` is a `.Success`, `nil` otherwise. */
 public func unwrapValue <T> (result: Result<T>) -> T? {
     return result.value()
 }
 
 
-/** Returns `result.error` if `result` is a `.Failure`, `nil` otherwise. */
 public func unwrapError <T> (result: Result<T>) -> NSError? {
     return result.error()
 }
 
 
-/** Zips its elements into a 2-tuple. */
 public func zip2 <T, U> (one:T) (two:U) -> (T, U) {
     return (one, two)
 }
 
 
-/** Zips its elements into a 3-tuple. */
 public func zip3 <T, U, V>  (one:T) (two:U) (three:V) -> (T, U, V) {
     return (one, two, three)
 }
 
-/** Creates a sequence by zipping each pair of elements from the two provided sequences. */
 public func zipseq <S: SequenceType, T: SequenceType>
     (one:S, two:T) -> SequenceOf<(S.Generator.Element, T.Generator.Element)>
 {
@@ -189,11 +169,11 @@ public func zipseq <S: SequenceType, T: SequenceType>
 }
 
 
-// @@TOOD: find a place to use this and see if it works
-public func unfold <T, U> (closure: T -> (U, T)?) (seed:T) -> SequenceOf<U>
+// @@TOOD: find a place to use this and see if it works (or just test `zipseq`, which uses it)
+public func unfold <T, U> (closure: T -> (U, T)?) (initial:T) -> SequenceOf<U>
 {
     var arr = [U]()
-    var current = seed
+    var current = initial
     while let (created, next) = closure(current) {
         current = next
         arr.append(created)
@@ -204,9 +184,15 @@ public func unfold <T, U> (closure: T -> (U, T)?) (seed:T) -> SequenceOf<U>
 
 
 //
-// The `partition` function takes a predicate and an array and returns
-// the pair of arrays of elements which do and do not satisfy the
-// predicate, respectively.
+//-- | The 'partition' function takes a predicate a list and returns
+//-- the pair of lists of elements which do and do not satisfy the
+//-- predicate, respectively; i.e.,
+//--
+//-- > partition p xs == (filter p xs, filter (not . p) xs)
+//
+//partition               :: (a -> Bool) -> [a] -> ([a],[a])
+//{-# INLINE partition #-}
+//partition p xs = foldr (select p) ([],[]) xs
 //
 
 public func partition <S: SequenceType, T where T == S.Generator.Element>

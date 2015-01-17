@@ -1,5 +1,5 @@
 PODS:
-  - Funky (0.1.0):
+  - Funky (0.1.1):
     - LlamaKit (= 0.1.1)
   - LlamaKit (0.1.1)
   - Nimble (0.2.0)
@@ -7,11 +7,11 @@ PODS:
   - Respect (0.0.1)
 
 DEPENDENCIES:
-  - Funky (~> 0.1.x)
+  - Funky (= 0.1.1)
   - LlamaKit (~> 0.1.x)
   - Nimble (from `https://github.com/Quick/Nimble.git`)
   - Quick (from `https://github.com/Quick/Quick.git`)
-  - Respect (from `~/projects/_swift/Respect`)
+  - Respect (from `https://github.com/brynbellomy/Respect`)
 
 EXTERNAL SOURCES:
   Nimble:
@@ -19,18 +19,21 @@ EXTERNAL SOURCES:
   Quick:
     :git: https://github.com/Quick/Quick.git
   Respect:
-    :path: ~/projects/_swift/Respect
+    :git: https://github.com/brynbellomy/Respect
 
 CHECKOUT OPTIONS:
   Nimble:
     :commit: 21b17c1427d850ad9f5d26ebeabece8a01da7d75
     :git: https://github.com/Quick/Nimble.git
   Quick:
-    :commit: 20a51898c7999f6a1c13036b1c39951825e0f581
+    :commit: 2323b00bee442fd4d81c7af16df2232fd25b4f46
     :git: https://github.com/Quick/Quick.git
+  Respect:
+    :commit: 628cffd709d64158551ac5fbfb66ca6139c9ade1
+    :git: https://github.com/brynbellomy/Respect
 
 SPEC CHECKSUMS:
-  Funky: 64530d8330aab5cc9fe7633db91b659aa6da30bb
+  Funky: 516acfd6e8912cd5af9c7158ba612e2593b03b9c
   LlamaKit: 430d2ae678888d13fe87f8a01d0c4fb69c06eb93
   Nimble: 79679d4cd5a3710db75e1dd9f5479f71842da6a6
   Quick: fdcce541eb5d73f5ac78f95c770ca6d6d69f0b81

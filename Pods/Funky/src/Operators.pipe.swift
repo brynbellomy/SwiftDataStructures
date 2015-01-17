@@ -10,7 +10,7 @@ import LlamaKit
 
 
 infix operator |> { associativity left }
-infix operator <| { associativity right precedence 101 }
+infix operator <| { associativity left precedence 101 }
 
 
 
