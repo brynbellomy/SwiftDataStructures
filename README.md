@@ -3,6 +3,13 @@
 
 <img src="cookie-monster-eating-o.gif" />
 
+[![Build Status](https://travis-ci.org/brynbellomy/SwiftDataStructures.svg?branch=master)](https://travis-ci.org/brynbellomy/SwiftDataStructures)
+[![CocoaPods](https://img.shields.io/cocoapods/v/SwiftDataStructures.svg?style=flat)](http://cocoadocs.org/docsets/SwiftDataStructures)
+[![CocoaPods](https://img.shields.io/cocoapods/p/SwiftDataStructures.svg?style=flat)](http://cocoadocs.org/docsets/SwiftDataStructures)
+[![CocoaPods](https://img.shields.io/cocoapods/l/SwiftDataStructures.svg?style=flat)](http://cocoadocs.org/docsets/SwiftDataStructures)
+[![GitHub tag](https://img.shields.io/github/tag/brynbellomy/SwiftDataStructures.svg?style=flat)]()
+
+
 ## install
 
 It's a [CocoaPod](http://cocoapods.org).  For the time being, only the pre-release beta of CocoaPods 0.36 is capable of working with Swift code.  To install it, use `gem install cocoapods --pre`.
