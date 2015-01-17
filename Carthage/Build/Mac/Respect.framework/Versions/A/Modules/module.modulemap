@@ -1,0 +1,10 @@
+framework module Respect {
+  umbrella header "Respect.h"
+
+  export *
+  module * { export * }
+}
+
+module Respect.Swift {
+    header "Respect-Swift.h"
+}
