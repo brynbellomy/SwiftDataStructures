@@ -16,7 +16,7 @@ It's a [CocoaPod](http://cocoapods.org).  For the time being, only the pre-relea
 
 Podfile:
 
-```
+```ruby
 pod 'SwiftDataStructures'
 ```
 
