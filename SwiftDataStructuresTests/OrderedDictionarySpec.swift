@@ -79,6 +79,17 @@ public class OrderedDictionarySpec
                         expect(args.subject.hasKey(elem.key)) == true
                     }
                 }
+
+                it("returns a sequence of tuples in the correct order for sequence()") {
+                    let seq         = Array(subject.sequence())
+                    let shouldMatch = map(elementsOnly) { ($0.key, $0.value) }
+
+                    let zipped = zipseq(seq, shouldMatch)
+                    for (one, two) in zipped {
+                        expect(one.0).to(equal(two.0))
+                        expect(one.1).to(equal(two.1))
+                    }
+                }
             }
         }
     }

@@ -29,8 +29,8 @@ public struct OrderedDictionary <K: Hashable, V> //: ListType
     public var count   : Index.Distance { return elements.count }
     public var isEmpty : Bool           { return count == 0 }
 
-    public var keys:   [K] { return map(generateTuples()) { key, value in key   } }
-    public var values: [V] { return map(generateTuples()) { key, value in value } }
+    public var keys:   [K] { return map(generateTuples()) { key, _   in key   } }
+    public var values: [V] { return map(generateTuples()) { _, value in value } }
 
 
     //
@@ -128,6 +128,10 @@ public struct OrderedDictionary <K: Hashable, V> //: ListType
     public func hasKey(key:Key) -> Bool {
         let index = find { $0.key == key }
         return index != nil
+    }
+
+    public func sequence() -> SequenceOf<(Key, Value)> {
+        return SequenceOf(generateTuples())
     }
 }
 
