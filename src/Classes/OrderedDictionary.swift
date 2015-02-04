@@ -88,14 +88,17 @@ public struct OrderedDictionary <K: Hashable, V> //: ListType
     }
 
     public mutating func updateValue (value: V, forKey key: K) {
+        precondition(hasKey(key) == true, "Tried to update value for key '\(key)' but the key was not found.")
         nodeForKey(key)!.item.value = value
     }
 
     public mutating func updateValue (value: V, atIndex index: Index) {
+        precondition(hasIndex(index) == true, "Tried to update value for index '\(index)' but it was out of range.")
         nodeAtIndex(index)!.item.value = value
     }
 
     public mutating func insertElement (element: Element, atIndex index: Index) {
+        precondition(hasKey(element.key) == false, "Tried to insert element but element's key already exists in the OrderedDictionary.")
         elements.insert(LinkedListNode(element), atIndex: index)
     }
 
@@ -105,8 +108,10 @@ public struct OrderedDictionary <K: Hashable, V> //: ListType
     }
 
     public mutating func removeForKey(key:K) -> Element {
-        let index = indexForKey(key)!
-        return removeAtIndex(index)
+        precondition(hasKey(key) == true)
+
+        let index = indexForKey(key)
+        return removeAtIndex(index!)
     }
 
     public mutating func removeAtIndex(index: Index) -> Element {
@@ -117,7 +122,7 @@ public struct OrderedDictionary <K: Hashable, V> //: ListType
         elements.removeAll(keepCapacity: keepCapacity)
     }
 
-    public func find(predicate: (Element) -> Bool) -> Index? {
+    public func find(predicate: Element -> Bool) -> Index? {
         return elements.find { predicate($0.item) }
     }
 
@@ -130,6 +135,11 @@ public struct OrderedDictionary <K: Hashable, V> //: ListType
         return index != nil
     }
 
+    /**
+        This is often the simplest method for iterating over the contents of the `OrderedDictionary` in
+        order.  `sequence()` returns a sequence whose elements are key-value pairs.  The sequence's order
+        is the same as the `OrderedDictionary`.
+    */
     public func sequence() -> SequenceOf<(Key, Value)> {
         return SequenceOf(generateTuples())
     }
