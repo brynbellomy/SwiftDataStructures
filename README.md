@@ -32,6 +32,7 @@ $ pod install
 - `Set`: Finally!
 - `Stack`: Also implemented with a `LinkedList`.
 - `Queue`: Like `Stack`, this has also been implemented using a `LinkedList`.
+- `List`: An abstraction over a `LinkedList` that hides its implementation using `LinkedListNode`s.  A `List`'s interface is basically identical to that of an `Array`.
 - `LinkedList` (serves as a base for a lot of the other data structures)
 
 ## Forthcoming:
