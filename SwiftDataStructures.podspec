@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.source_files = 'src/**/*.swift'
   s.requires_arc = true
 
-  s.dependency 'Funky', '0.1.1'
+  s.dependency 'Funky', '0.1.2'
 
   s.source = { :git => 'https://github.com/brynbellomy/SwiftDataStructures.git', :tag => s.version }
 end
