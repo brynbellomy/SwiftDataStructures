@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Stack Struct Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script type="text/javascript">
+    window.jazzy = {'docset': false}
+    if (typeof window.dash != 'undefined') {
+      document.documentElement.className += ' dash'
+      window.jazzy.docset = true
+    }
+    if (navigator.userAgent.match(/xcode/i)) {
+      document.documentElement.className += ' xcode'
+      window.jazzy.docset = true
+    }
+    </script>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+  </head>
+  <body id="reference" class="Swift">
+    <a name="//apple_ref/swift/Struct/Stack" class="dashAnchor"></a>
+    <a title="Stack Struct Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p class="header-text"><a href="../index.html">SwiftDataStructures Docs</a> (35% documented)</p>
+        <p id="header-links"><a href="https://github.com/brynbellomy/SwiftDataStructures"><img id="header-icon" src="../img/gh.png" height="16px" width="16px" />View on GitHub</a></p>
+      </div>
+    </header>
+    <section id="valence">
+      <div class="content-wrapper">
+        <p id="hierarchial_navigation">
+        <a href="../index.html" id="design_resources_link">SwiftDataStructures Reference</a>
+        <img id="carat" src="../img/carat.png" height="10px" width="6px" />
+        Stack Struct Reference
+        </p>
+      </div>
+    </section>
+    <div class="content-wrapper">
+      <nav class="book-parts">
+        <ul class="nav-parts">
+          <li class="part-name tasks">
+          <a href="../Classes.html">Classes</a>
+            <ul class="nav-chapters">
+              <li class="nav-chapter">
+                <a href="../Classes/LinkedListNode.html">LinkedListNode</a>
+              </li>
+            </ul>
+          </li>
+          <li class="part-name tasks">
+          <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-chapters">
+              <li class="nav-chapter">
+                <a href="../Extensions/LinkedList.html">LinkedList</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Extensions/List.html">List</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Extensions/OrderedDictionary.html">OrderedDictionary</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Extensions/Queue.html">Queue</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Extensions/Set.html">Set</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Extensions/Stack.html">Stack</a>
+              </li>
+            </ul>
+          </li>
+          <li class="part-name tasks">
+          <a href="../Functions.html">Functions</a>
+            <ul class="nav-chapters">
+              <li class="nav-chapter">
+                <a href="../Functions.html#/s:F19SwiftDataStructuresoi1aUSs8Hashable__FTGVS_3SetQ__GS1_Q___GS1_Q__">&amp;(_:_:)</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Functions.html#/s:F19SwiftDataStructuresoi2aeUSs8Hashable__FTRGVS_3SetQ__GS1_Q___T_">&amp;=(_:_:)</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Functions.html#/s:F19SwiftDataStructuresoi1pUSs8Hashable__FTGVS_3SetQ__GS1_Q___GS1_Q__">+(_:_:)</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Functions.html#/s:F19SwiftDataStructuresoi2peUSs12SequenceType_USs13GeneratorType_Ss8Hashable__FTRGVS_3SetQQQ_9Generator7Element_Q__T_">+=(_:_:)</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Functions.html#/s:F19SwiftDataStructuresoi1sUSs8Hashable__FTGVS_3SetQ__GS1_Q___GS1_Q__">-(_:_:)</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Functions.html#/s:F19SwiftDataStructuresoi2seUSs8Hashable__FTRGVS_3SetQ__GS1_Q___T_">-=(_:_:)</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Functions.html#/s:F19SwiftDataStructuresoi1lU__FTGVS_10StackIndexQ__GS0_Q___Sb">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Functions.html#/s:F19SwiftDataStructuresoi2eeUSs8Hashable__FTGVS_3SetQ__GS1_Q___Sb">==(_:_:)</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Functions.html#/s:F19SwiftDataStructuresoi2eeUSs9Equatable__FTGCS_14LinkedListNodeQ__GS1_Q___Sb">==(_:_:)</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Functions.html#/s:F19SwiftDataStructuresoi2eeUSs8Hashable_Ss9Equatable__FTGVS_24OrderedDictionaryElementQ_Q0__TQ_Q0___Sb">==(_:_:)</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Functions.html#/s:F19SwiftDataStructuresoi2eeUSs8Hashable_Ss9Equatable__FTGVS_24OrderedDictionaryElementQ_Q0__GS2_Q_Q0___Sb">==(_:_:)</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Functions.html#/s:F19SwiftDataStructuresoi2eeUSs8Hashable_Ss9Equatable__FTGSqGVS_24OrderedDictionaryElementQ_Q0___GSqGS2_Q_Q0____Sb">==(_:_:)</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Functions.html#/s:F19SwiftDataStructuresoi2eeU__FTGVS_10StackIndexQ__GS0_Q___Sb">==(_:_:)</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Functions.html#/s:F19SwiftDataStructuresoi2eeUSs9Equatable__FTGVS_10LinkedListQ__GS1_Q___Sb">==(_:_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="part-name tasks">
+          <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-chapters">
+              <li class="nav-chapter">
+                <a href="../Protocols/IFiniteSetType.html">IFiniteSetType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="part-name tasks">
+          <a href="../Structs.html">Structs</a>
+            <ul class="nav-chapters">
+              <li class="nav-chapter">
+                <a href="../Structs/FiniteSet.html">FiniteSet</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Structs/LinkedList.html">LinkedList</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Structs/LinkedListGenerator.html">LinkedListGenerator</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Structs/List.html">List</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Structs/OrderedDictionary.html">OrderedDictionary</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Structs/OrderedDictionaryElement.html">OrderedDictionaryElement</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Structs/Queue.html">Queue</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Structs/Set.html">Set</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Structs/Stack.html">Stack</a>
+              </li>
+              <li class="nav-chapter">
+                <a href="../Structs/StackIndex.html">StackIndex</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <div class="pixel-line"></div>
+      <div class="rubber-band-gap"></div>
+      <article class="chapter">
+      <a name="/"></a>
+        <h1 class="chapter-name">Stack</h1>
+        <section>
+          <section class="section">
+            <p class="para">Undocumented</p>
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <div class="task-name-container">
+                
+                <a name="/Unnamed"></a>
+                
+              </div>
+              <ul class="task-group-list">
+                <li class="item symbol">
+                  <div class="task-group-term">
+                    <code>
+                    <a name="/s:vV19SwiftDataStructures5Stack3topGSqQ__">
+                    <a name="//apple_ref/swift/Property/top" class="dashAnchor"></a>
+                    <a class="x-instance-method Swift" href="#/s:vV19SwiftDataStructures5Stack3topGSqQ__">top</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointy-thing-container"></div>
+                    <section class="section instance-method">
+                      <div class="pointy-thing"></div>
+                      <div class="abstract">
+                        <p class="para">Undocumented</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item symbol">
+                  <div class="task-group-term">
+                    <code>
+                    <a name="/s:vV19SwiftDataStructures5Stack6bottomGSqQ__">
+                    <a name="//apple_ref/swift/Property/bottom" class="dashAnchor"></a>
+                    <a class="x-instance-method Swift" href="#/s:vV19SwiftDataStructures5Stack6bottomGSqQ__">bottom</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointy-thing-container"></div>
+                    <section class="section instance-method">
+                      <div class="pointy-thing"></div>
+                      <div class="abstract">
+                        <p class="para">Undocumented</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item symbol">
+                  <div class="task-group-term">
+                    <code>
+                    <a name="/s:vV19SwiftDataStructures5Stack5countSi">
+                    <a name="//apple_ref/swift/Property/count" class="dashAnchor"></a>
+                    <a class="x-instance-method Swift" href="#/s:vV19SwiftDataStructures5Stack5countSi">count</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointy-thing-container"></div>
+                    <section class="section instance-method">
+                      <div class="pointy-thing"></div>
+                      <div class="abstract">
+                        <p class="para">Undocumented</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item symbol">
+                  <div class="task-group-term">
+                    <code>
+                    <a name="/s:vV19SwiftDataStructures5Stack7isEmptySb">
+                    <a name="//apple_ref/swift/Property/isEmpty" class="dashAnchor"></a>
+                    <a class="x-instance-method Swift" href="#/s:vV19SwiftDataStructures5Stack7isEmptySb">isEmpty</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointy-thing-container"></div>
+                    <section class="section instance-method">
+                      <div class="pointy-thing"></div>
+                      <div class="abstract">
+                        <p class="para">Undocumented</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item symbol">
+                  <div class="task-group-term">
+                    <code>
+                    <a name="/s:FV19SwiftDataStructures5StackcU__FMGS0_Q__FT_GS0_Q__">
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="x-instance-method Swift" href="#/s:FV19SwiftDataStructures5StackcU__FMGS0_Q__FT_GS0_Q__">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointy-thing-container"></div>
+                    <section class="section instance-method">
+                      <div class="pointy-thing"></div>
+                      <div class="abstract">
+                        <p class="para">Undocumented</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item symbol">
+                  <div class="task-group-term">
+                    <code>
+                    <a name="/s:FV19SwiftDataStructures5StackcU__FMGS0_Q__USs12SequenceType_USs13GeneratorType__FQ_GS0_Qd___">
+                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
+                    <a class="x-instance-method Swift" href="#/s:FV19SwiftDataStructures5StackcU__FMGS0_Q__USs12SequenceType_USs13GeneratorType__FQ_GS0_Qd___">init(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointy-thing-container"></div>
+                    <section class="section instance-method">
+                      <div class="pointy-thing"></div>
+                      <div class="abstract">
+                        <p class="para">Element order is [top, &hellip;, bottom], as if one were to iterate through the sequence in reverse, calling <code>stack.push(element)</code> on each element.</p>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+            
+                        <div class="Swift">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">S</span> <span class="p">:</span> <span class="kt">SequenceType</span> <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Generator</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">elements</span><span class="p">:</span><span class="kt">S</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item symbol">
+                  <div class="task-group-term">
+                    <code>
+                    <a name="/s:FV19SwiftDataStructures5Stack4pushU__FRGS0_Q__FQ_T_">
+                    <a name="//apple_ref/swift/Method/push(_:)" class="dashAnchor"></a>
+                    <a class="x-instance-method Swift" href="#/s:FV19SwiftDataStructures5Stack4pushU__FRGS0_Q__FQ_T_">push(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointy-thing-container"></div>
+                    <section class="section instance-method">
+                      <div class="pointy-thing"></div>
+                      <div class="abstract">
+                        <p class="para">Adds an element to the top of the stack.</p>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+            
+                        <div class="Swift">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">push</span><span class="p">(</span><span class="nv">elem</span><span class="p">:</span> <span class="kt">Element</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="parameters">
+                        <h4>Parameters</h4>
+                        <table class="graybox" border="0" cellspacing="0" cellpadding="5">
+                          <tbody>
+                            <tr>
+                              <td scope="row">
+                                <code>
+                                <em class="term">elem</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div class="definition">
+                                  <p class="para">The element to add.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item symbol">
+                  <div class="task-group-term">
+                    <code>
+                    <a name="/s:FV19SwiftDataStructures5Stack3popU__FRGS0_Q__FT_GSqQ__">
+                    <a name="//apple_ref/swift/Method/pop()" class="dashAnchor"></a>
+                    <a class="x-instance-method Swift" href="#/s:FV19SwiftDataStructures5Stack3popU__FRGS0_Q__FT_GSqQ__">pop()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointy-thing-container"></div>
+                    <section class="section instance-method">
+                      <div class="pointy-thing"></div>
+                      <div class="abstract">
+                        <p class="para">Removes the top element from the stack and returns it.</p>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+            
+                        <div class="Swift">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">pop</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Element</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="result-description">
+                        <h4>Return Value</h4>
+                        <p class="para">The removed element or <code>nil</code> if the stack is empty.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item symbol">
+                  <div class="task-group-term">
+                    <code>
+                    <a name="/s:FV19SwiftDataStructures5Stack2atU__FGS0_Q__FT5indexSi_GSqQ__">
+                    <a name="//apple_ref/swift/Method/at(index:)" class="dashAnchor"></a>
+                    <a class="x-instance-method Swift" href="#/s:FV19SwiftDataStructures5Stack2atU__FGS0_Q__FT5indexSi_GSqQ__">at(index:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointy-thing-container"></div>
+                    <section class="section instance-method">
+                      <div class="pointy-thing"></div>
+                      <div class="abstract">
+                        <p class="para">Returns the element at the specified index, or nil if the index was out of range.</p>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+            
+                        <div class="Swift">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">at</span><span class="p">(</span><span class="n">index</span> <span class="nv">i</span><span class="p">:</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Element</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item symbol">
+                  <div class="task-group-term">
+                    <code>
+                    <a name="/s:FV19SwiftDataStructures5Stack4findU__FGS0_Q__FFQ_SbGSqGVS_10StackIndexQ___">
+                    <a name="//apple_ref/swift/Method/find(_:)" class="dashAnchor"></a>
+                    <a class="x-instance-method Swift" href="#/s:FV19SwiftDataStructures5Stack4findU__FGS0_Q__FFQ_SbGSqGVS_10StackIndexQ___">find(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointy-thing-container"></div>
+                    <section class="section instance-method">
+                      <div class="pointy-thing"></div>
+                      <div class="abstract">
+                        <p class="para">Returns the index of the first element for which <code>predicate</code> returns true.</p>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+            
+                        <div class="Swift">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">find</span><span class="p">(</span><span class="nv">predicate</span><span class="p">:</span> <span class="p">(</span><span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Index</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item symbol">
+                  <div class="task-group-term">
+                    <code>
+                    <a name="/s:FV19SwiftDataStructures5Stack6insertU__FRGS0_Q__FTQ_7atIndexSi_T_">
+                    <a name="//apple_ref/swift/Method/insert(_:atIndex:)" class="dashAnchor"></a>
+                    <a class="x-instance-method Swift" href="#/s:FV19SwiftDataStructures5Stack6insertU__FRGS0_Q__FTQ_7atIndexSi_T_">insert(_:atIndex:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointy-thing-container"></div>
+                    <section class="section instance-method">
+                      <div class="pointy-thing"></div>
+                      <div class="abstract">
+                        <p class="para">Inserts the provided element <code>n</code> positions from the top of the stack.  The index must be &gt;= startIndex and &lt;= endIndex or a precondition will fail.  Insert can therefore be used to append and prepend elements to the list (and, in fact, <code>append</code> and <code>prepend</code> simply call this function).</p>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+            
+                        <div class="Swift">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">insert</span><span class="p">(</span><span class="nv">newElement</span><span class="p">:</span><span class="kt">Element</span><span class="p">,</span> <span class="n">atIndex</span> <span class="nv">i</span><span class="p">:</span><span class="kt">Index</span><span class="o">.</span><span class="kt">RawIndex</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item symbol">
+                  <div class="task-group-term">
+                    <code>
+                    <a name="/s:FV19SwiftDataStructures5Stack6insertU__FRGS0_Q__FTQ_7atIndexGVS_10StackIndexQ___T_">
+                    <a name="//apple_ref/swift/Method/insert(_:atIndex:)" class="dashAnchor"></a>
+                    <a class="x-instance-method Swift" href="#/s:FV19SwiftDataStructures5Stack6insertU__FRGS0_Q__FTQ_7atIndexGVS_10StackIndexQ___T_">insert(_:atIndex:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointy-thing-container"></div>
+                    <section class="section instance-method">
+                      <div class="pointy-thing"></div>
+                      <div class="abstract">
+                        <p class="para">Undocumented</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item symbol">
+                  <div class="task-group-term">
+                    <code>
+                    <a name="/s:FV19SwiftDataStructures5Stack13removeAtIndexU__FRGS0_Q__FGVS_10StackIndexQ__Q_">
+                    <a name="//apple_ref/swift/Method/removeAtIndex(_:)" class="dashAnchor"></a>
+                    <a class="x-instance-method Swift" href="#/s:FV19SwiftDataStructures5Stack13removeAtIndexU__FRGS0_Q__FGVS_10StackIndexQ__Q_">removeAtIndex(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointy-thing-container"></div>
+                    <section class="section instance-method">
+                      <div class="pointy-thing"></div>
+                      <div class="abstract">
+                        <p class="para">Removes the element <code>n</code> positions from the top of the stack and returns it.  <code>index</code> must be a valid index or a precondition assertion will fail.</p>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+            
+                        <div class="Swift">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">removeAtIndex</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span><span class="kt">Index</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="parameters">
+                        <h4>Parameters</h4>
+                        <table class="graybox" border="0" cellspacing="0" cellpadding="5">
+                          <tbody>
+                            <tr>
+                              <td scope="row">
+                                <code>
+                                <em class="term">index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div class="definition">
+                                  <p class="para">The index of the element to remove.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="result-description">
+                        <h4>Return Value</h4>
+                        <p class="para">The removed element.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item symbol">
+                  <div class="task-group-term">
+                    <code>
+                    <a name="/s:FV19SwiftDataStructures5Stack13removeAtIndexU__FRGS0_Q__FSiQ_">
+                    <a name="//apple_ref/swift/Method/removeAtIndex(_:)" class="dashAnchor"></a>
+                    <a class="x-instance-method Swift" href="#/s:FV19SwiftDataStructures5Stack13removeAtIndexU__FRGS0_Q__FSiQ_">removeAtIndex(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointy-thing-container"></div>
+                    <section class="section instance-method">
+                      <div class="pointy-thing"></div>
+                      <div class="abstract">
+                        <p class="para">Undocumented</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item symbol">
+                  <div class="task-group-term">
+                    <code>
+                    <a name="/s:FV19SwiftDataStructures5Stack9removeTopU__FRGS0_Q__FT_Q_">
+                    <a name="//apple_ref/swift/Method/removeTop()" class="dashAnchor"></a>
+                    <a class="x-instance-method Swift" href="#/s:FV19SwiftDataStructures5Stack9removeTopU__FRGS0_Q__FT_Q_">removeTop()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointy-thing-container"></div>
+                    <section class="section instance-method">
+                      <div class="pointy-thing"></div>
+                      <div class="abstract">
+                        <p class="para">This function is equivalent to <code>pop()</code>, except that it will fail if the stack is empty.</p>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+            
+                        <div class="Swift">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">removeTop</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="result-description">
+                        <h4>Return Value</h4>
+                        <p class="para">The removed element.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p class="copyright">&copy; 2015 <a class="link" href="https://github.com/brynbellomy" target="_blank" rel="external">bryn austin bellomy</a>. All rights reserved. (Last updated: 2015-02-08)</p>
+          <p class="copyright">Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.1.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

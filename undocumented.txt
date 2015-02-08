@@ -1,0 +1,156 @@
+Set.swift
+	public init(_ elements: T...)
+	public init(minimumCapacity: Int)
+	public init(arrayLiteral elements: T...)
+	public func generate() -> GeneratorOf<T>
+	public var startIndex: DictionaryIndex<T, Unit> { re
+	public var endIndex:   DictionaryIndex<T, Unit> { re
+	public var description:      String { return
+	public var debugDescription: String { return
+List.swift
+	public struct List <T>
+	public var back    : Element?
+	public var front   : Element?
+	public var count   : Index.Distance
+	public var isEmpty : Bool
+	public init()
+	public func find(predicate: (Element) -> Bool) -> Index?
+	public mutating func removeAtIndex(index:Index) -> Element
+	public struct List&lt;T&gt;
+	public func generate() -> Generator
+	public struct List&lt;T&gt;
+	public var startIndex : Index
+	public var endIndex   : Index
+	public struct List&lt;T&gt;
+	public mutating func reserveCapacity(n: Index.Distance)
+	public struct List&lt;T&gt;
+LinkedList.swift
+	public private(set) var first: NodeType?
+	public private(set) var last:  LinkedListNode<T>?
+	public private(set) var count: Index.Distance = 0
+	public init()
+	public init(_ other:LinkedList<T>)
+	public init <S: SequenceType where S.Generator.Element == NodeType> (_ nodes:S)
+	public init <C: CollectionType where C.Generator.Element == NodeType> (_ nodes:C)
+	public init <S: SequenceType where S.Generator.Element == T> (elements:S)
+	public var item: T
+	public private(set) var previous: LinkedListNode<T>?
+	public private(set) var next:     LinkedListNode<T>?
+	public init(_ theItem:T)
+	public func == <T: Equatable> (lhs:LinkedList<T>, rhs:LinkedList<T>) -> Bool
+	public func == <T: Equatable> (lhs:LinkedListNode<T>, rhs:LinkedListNode<T>) -> Bool
+	public func generate() -> Generator
+	public struct LinkedListGenerator <T> : GeneratorType
+	public init(_ linkedList:Collection)
+	public mutating func next() -> Collection.NodeType?
+	public var startIndex : Index
+	public var endIndex   : Index
+	public mutating func reserveCapacity(n: Index.Distance)
+	public mutating func append(newElement:NodeType)
+	public mutating func extend <S : SequenceType where S.Generator.Element == T> (unwrapped sequence: S)
+	public mutating func extend <S : SequenceType where S.Generator.Element == NodeType> (sequence: S)
+	public mutating func replaceRange <C: CollectionType where C.Generator.Element == NodeType>
+        (subrange: Range<Index>, with newElements: C)
+	public mutating func splice <C: CollectionType where C.Generator.Element == NodeType> (newElements: C, atIndex i: Index)
+	public mutating func removeRange(subrange: Range<Index>)
+	public mutating func removeRange(subrange: Range<Index>) -> (NodeType?, NodeType?)
+	public init(arrayLiteral elements: T...)
+	public var description: String
+	public var debugDescription: String
+FiniteSet.swift
+	public protocol IFiniteSetType: Hashable
+	class var finiteSetMembers: Set<Self>
+	public struct FiniteSet <T: IFiniteSetType>
+	public private(set) var set = Set<T>()
+	public init()
+	public init(_ s:Set<T>)
+	public init <S: SequenceType where S.Generator.Element == T> (_ elems:S)
+OrderedDictionary.swift
+	public struct OrderedDictionary <K: Hashable, V> //: ListType
+	public var last    : Element?
+	public var first   : Element?
+	public var count   : Index.Distance
+	public var isEmpty : Bool
+	public var keys:   [K]
+	public var values: [V]
+	public init()
+	public init <S: SequenceType where S.Generator.Element == Element>(_ elements:S)
+	public func elementForKey (key: K) -> Element?
+	public func elementAtIndex(index: Index) -> Element?
+	public func findKey(key: K) -> Index?
+	public mutating func updateValue (value: V, forKey key: K)
+	public mutating func updateValue (value: V, atIndex index: Index)
+	public mutating func insertElement (element: Element, atIndex index: Index)
+	public mutating func insertKey (key: Key, value: Value, atIndex index: Index)
+	public mutating func removeForKey(key:K) -> Element
+	public mutating func removeAtIndex(index: Index) -> Element
+	public mutating func removeAll(#keepCapacity:Bool)
+	public func find(predicate: Element -> Bool) -> Index?
+	public func hasIndex(index:Index) -> Bool
+	public func hasKey(key:Key) -> Bool
+	public struct OrderedDictionary&lt;K : Hashable, V&gt;
+	public func generate() -> Generator
+	public func generateTuples() -> GeneratorOf<(Key, Value)>
+	public struct OrderedDictionary&lt;K : Hashable, V&gt;
+	public var startIndex : Index
+	public var endIndex   : Index
+	public struct OrderedDictionary&lt;K : Hashable, V&gt;
+	public mutating func reserveCapacity(n: Index.Distance)
+	public mutating func append(newElement: Element)
+	public mutating func append(key: Key, value: Value)
+	public mutating func extend <S: SequenceType where S.Generator.Element == Element> (sequence: S)
+	public mutating func extendTuples <S: SequenceType where S.Generator.Element == KeyValueTuple> (sequence: S)
+	public struct OrderedDictionary&lt;K : Hashable, V&gt;
+	public init(dictionaryLiteral elements: (Key, Value)...)
+	public struct OrderedDictionaryElement <K: Hashable, V>
+	public let key: Key
+	public private(set) var value: Value
+	public init(key k:Key, value v:Value)
+	public func asTuple() -> (Key, Value)
+Stack.swift
+	public struct StackIndex<T> : BidirectionalIndexType, Comparable, IntegerLiteralConvertible
+	public init(_ v: RawIndex)
+	public func underlyingIndexForEndIndex(endIndex:Stack<T>.UnderlyingCollection.Index) -> Stack<T>.UnderlyingCollection.Index
+	public init(integerLiteral value:Int)
+	public func successor() -> StackIndex<T>
+	public func predecessor() -> StackIndex<T>
+	public func == <T>(lhs: StackIndex<T>, rhs: StackIndex<T>) -> Bool
+	public func < <T>(lhs:StackIndex<T>, rhs: StackIndex<T>) -> Bool
+	public struct Stack<T>
+	public var top     : Element?
+	public var bottom  : Element?
+	public var count   : Index.Distance
+	public var isEmpty : Bool
+	public init()
+	public mutating func insert(newElement:Element, atIndex index:Index)
+	public mutating func removeAtIndex(index:Index.RawIndex) -> Element
+	public struct Stack&lt;T&gt;
+	public func generate() -> Generator
+	public struct Stack&lt;T&gt;
+	public var startIndex : Index
+	public var endIndex   : Index
+	public struct Stack&lt;T&gt;
+	public mutating func reserveCapacity(n: Index.Distance)
+	public struct Stack&lt;T&gt;
+	public struct Stack&lt;T&gt;
+	public var description: String
+	public var debugDescription: String
+Queue.swift
+	public struct Queue<T>
+	public var back    : Element?
+	public var front   : Element?
+	public var count   : Index.Distance
+	public var isEmpty : Bool
+	public init()
+	public mutating func enqueue(elem: Element)
+	public mutating func dequeue() -> Element?
+	public func find(predicate: (Element) -> Bool) -> Index?
+	public mutating func removeAtIndex(index:Index) -> Element
+	public struct Queue&lt;T&gt;
+	public func generate() -> Generator
+	public struct Queue&lt;T&gt;
+	public var startIndex : Index
+	public var endIndex   : Index
+	public struct Queue&lt;T&gt;
+	public mutating func reserveCapacity(n: Index.Distance)
+	public struct Queue&lt;T&gt;
