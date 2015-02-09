@@ -70,12 +70,7 @@ public struct OrderedDictionary <K: Hashable, V> //: ListType
     }
 
     public func indexForKey(key: K) -> Index? {
-        for (i, node) in enumerate(elements) {
-            if node.item.key == key {
-                return i
-            }
-        }
-        return nil
+        return find { $0.key == key }
     }
 
     /**
@@ -131,8 +126,7 @@ public struct OrderedDictionary <K: Hashable, V> //: ListType
     }
 
     public func hasKey(key:Key) -> Bool {
-        let index = find { $0.key == key }
-        return index != nil
+        return indexForKey(key) != nil
     }
 
     /**
