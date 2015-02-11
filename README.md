@@ -29,7 +29,6 @@ $ pod install
 ## Currently implemented:
 
 - `OrderedDictionary`: Implemented using `LinkedList` rather than one of Swift's built-in types.  Hopefully a bit faster this way.
-- `Set`: Finally!
 - `Stack`: Also implemented with a `LinkedList`.
 - `Queue`: Like `Stack`, this has also been implemented using a `LinkedList`.
 - `List`: An abstraction over a `LinkedList` that hides its implementation using `LinkedListNode`s.  A `List`'s interface is basically identical to that of an `Array`.
@@ -38,6 +37,7 @@ $ pod install
 ## Forthcoming:
 
 - `OrderedSet`
+- `Tree` (I'm curious what types of trees people would be interested in using)
 - A complete test suite
 - Performance tests
 
