@@ -7,7 +7,6 @@
 //
 
 import Funky
-//import Respect
 
 
 //
@@ -21,6 +20,7 @@ import Funky
 public struct LinkedList <T> //: ListType
 {
     public typealias InnerType = T
+    public typealias Element = T
     public typealias NodeType = LinkedListNode<T>
 
     public private(set) var first: NodeType?
@@ -33,39 +33,38 @@ public struct LinkedList <T> //: ListType
     }
 
     public init(_ other:LinkedList<T>) {
-        extend(other)
+        appendContentsOf(other)
     }
 
 
     public init <S: SequenceType where S.Generator.Element == NodeType> (_ nodes:S) {
-        extend(nodes)
+        appendContentsOf(nodes)
     }
 
 
     public init <C: CollectionType where C.Generator.Element == NodeType> (_ nodes:C) {
-        extend(nodes)
+        appendContentsOf(nodes)
     }
 
 
-    public init <S: SequenceType where S.Generator.Element == T> (elements:S) {
-        let mapped = map(elements) { NodeType($0) }
-        extend(mapped)
+    public init <S: SequenceType where S.Generator.Element == T> (_ elements:S) {
+        let mapped = elements.map { NodeType($0) }
+        appendContentsOf(mapped)
     }
 
 
     /**
         Returns the element at the specified index, or nil if the index was out of range.
      */
-    public func at(index:Index) -> Generator.Element?
-    {
-        if !contains(startIndex ..< endIndex, index) {
+    public func at(index:Index) -> Generator.Element? {
+        if !(startIndex ..< endIndex).contains(index) {
             return nil
         }
 
         var generator = generate()
         var current   = first
 
-        for i in startIndex ... index {
+        for _ in startIndex ... index {
             current = generator.next()
         }
 
@@ -77,9 +76,8 @@ public struct LinkedList <T> //: ListType
     /**
         Returns the index of the first element for which `predicate` returns true.
      */
-    public func find(predicate: (LinkedListNode<T>) -> Bool) -> Index?
-    {
-        for (i, elem) in enumerate(self) {
+    public func find(predicate: (LinkedListNode<T>) -> Bool) -> Index? {
+        for (i, elem) in self.enumerate() {
             if predicate(elem) == true {
                 return i
             }
@@ -161,8 +159,7 @@ public struct LinkedListGenerator <T> : GeneratorType
         current = linkedList.first
     }
 
-    public mutating func next() -> Collection.NodeType?
-    {
+    public mutating func next() -> Collection.NodeType? {
         // @@TODO: i seem to recall reading in apple's swift documentation that this precondition should be enforced; however, it causes a runtime crash (on xcode 6.1.1).  should investigate.
         // precondition(current != nil, "next() was called too many times")
 
@@ -216,56 +213,22 @@ extension LinkedList: MutableCollectionType
 
 
 //
-// MARK: - LinkedList: ExtensibleCollectionType
-//
-
-extension LinkedList: ExtensibleCollectionType
-{
-    public mutating func reserveCapacity(n: Index.Distance) {
-        // no-op
-    }
-
-    public mutating func append(newElement:NodeType) {
-        insert(newElement, atIndex:endIndex)
-    }
-
-
-    public mutating func extend <S : SequenceType where S.Generator.Element == T> (unwrapped sequence: S) {
-        let mapped = map(sequence) { NodeType($0) }
-        extend(mapped)
-    }
-
-    public mutating func extend <S : SequenceType where S.Generator.Element == NodeType> (sequence: S)
-    {
-        // Note that this should just be "for item in sequence"; this is working around a compiler crash.
-        for elem in [NodeType](sequence) {
-            append(elem)
-        }
-    }
-}
-
-
-//
 // MARK: - LinkedList: MutableSliceable
 //
 
 extension LinkedList: MutableSliceable
 {
-    public subscript(subrange: Range<Index>) -> LinkedList<T>
-    {
-        get
-        {
-            precondition(contains(self, subrange), "Subrange (\(subrange)) out of range.")
+    public subscript(subrange: Range<Index>) -> LinkedList<T> {
+        get {
+            precondition(containsIndices(self, subrange), "Subrange (\(subrange)) out of range.")
 
             var subslice = LinkedList<T>()
             subslice.first = self[ subrange.startIndex ]
             subslice.last  = self[ subrange.endIndex ]
             return subslice
         }
-
-        set
-        {
-            precondition(contains(self, subrange), "Subrange (\(subrange)) out of range.")
+        set {
+//            precondition(containsIndices(self, subrange), "Subrange (\(subrange)) out of range.")
 
             let removeLength = subrange.endIndex - subrange.startIndex
             let insertLength = newValue.count
@@ -279,8 +242,7 @@ extension LinkedList: MutableSliceable
             if let previous = spliceBegin.previous {
                 previous.next = insertionBegin
                 insertionBegin?.previous = previous
-            }
-            else {
+            } else {
                 assert(spliceBegin === first)
                 first = insertionBegin
                 first?.previous = nil
@@ -289,8 +251,7 @@ extension LinkedList: MutableSliceable
             if let next = spliceEnd.next {
                 next.previous = insertionEnd
                 insertionEnd?.next = next
-            }
-            else {
+            } else {
                 assert(spliceEnd === last)
                 last = newValue.last
                 last?.next = nil
@@ -309,10 +270,25 @@ extension LinkedList: MutableSliceable
 
 extension LinkedList: RangeReplaceableCollectionType
 {
+    public mutating func reserveCapacity(n: Index.Distance) {
+        // no-op
+    }
+
+    public mutating func append(newElement:NodeType) {
+        insert(newElement, atIndex:endIndex)
+    }
+
+    public mutating func appendContentsOf <S : SequenceType where S.Generator.Element == NodeType> (sequence: S) {
+        // Note that this should just be "for item in sequence"; this is working around a compiler crash.
+        for elem in sequence {
+            append(elem)
+        }
+    }
+
     public mutating func replaceRange <C: CollectionType where C.Generator.Element == NodeType>
         (subrange: Range<Index>, with newElements: C)
     {
-        var newElems = LinkedList(SequenceOf<NodeType>(newElements))
+        let newElems = LinkedList(AnySequence<NodeType>(newElements))
         self[subrange] = newElems
     }
 
@@ -351,8 +327,7 @@ extension LinkedList: RangeReplaceableCollectionType
 
 
 
-    public mutating func splice <C: CollectionType where C.Generator.Element == NodeType> (newElements: C, atIndex i: Index) {
-        let range: Range<Index> = i ... i
+    public mutating func insertContentsOf<C : CollectionType where C.Generator.Element == Generator.Element>(newElements: C, at i: Index) {
         replaceRange(i...i, with: newElements)
     }
 
@@ -360,16 +335,16 @@ extension LinkedList: RangeReplaceableCollectionType
     /**
         Removes the element `n` positions from the beginning of the list and returns it.  `index` must be a valid index or a precondition assertion will fail.
 
-        :param: index The index of the element to remove.
-        :returns: The removed element.
+        - parameter index: The index of the element to remove.
+        - returns: The removed element.
      */
     public mutating func removeAtIndex(index:Index) -> NodeType
     {
         precondition(index >= startIndex && index <= endIndex.predecessor(), "index (\(index)) is out of range [startIndex = \(startIndex), endIndex = \(endIndex), count = \(count)].")
 
-        var element = self[index]
-        var elementBefore = element.previous
-        var elementAfter  = element.next
+        let element = self[index]
+        let elementBefore = element.previous
+        let elementAfter  = element.next
 
         if index == startIndex {
             first = elementAfter
@@ -391,21 +366,15 @@ extension LinkedList: RangeReplaceableCollectionType
     }
 
 
-    public mutating func removeRange(subrange: Range<Index>) {
-        let tuple: (NodeType?, NodeType?) = removeRange(subrange)
-        return
-    }
-
-    public mutating func removeRange(subrange: Range<Index>) -> (NodeType?, NodeType?)
-    {
-        var startNode = self[subrange.startIndex]
-        var endNode   = self[subrange.endIndex]
+    public mutating func removeRange(subrange: Range<Index>) -> (NodeType?, NodeType?) {
+        let startNode = self[subrange.startIndex]
+        let endNode   = self[subrange.endIndex]
         let (previous, subsequent) = (startNode.previous, endNode.next)
 
         previous?.next       = subsequent
         subsequent?.previous = previous
 
-        count -= distance(subrange.startIndex, subrange.endIndex)
+        count -= subrange.startIndex.distanceTo(subrange.endIndex)
 
         return (previous, subsequent)
     }
@@ -414,7 +383,7 @@ extension LinkedList: RangeReplaceableCollectionType
     /**
         Removes all of the elements from the list.  The `keepCapacity` parameter is ignored.
      */
-    public mutating func removeAll(#keepCapacity:Bool) {
+    public mutating func removeAll(keepCapacity keepCapacity:Bool) {
         first = nil
         last  = nil
         count = 0
@@ -427,13 +396,18 @@ extension LinkedList: RangeReplaceableCollectionType
 // MARK: - LinkedList: ArrayLiteralConvertible
 //
 
-extension LinkedList: ArrayLiteralConvertible
-{
-    public init(arrayLiteral elements: T...) {
-        let wrapped = elements |> mapr { LinkedListNode($0) }
-        extend(wrapped)
-    }
-}
+//extension LinkedList: ArrayLiteralConvertible
+//{
+//    public init(arrayLiteral elements: T...) {
+//        let asdf = elements.map(NodeType.init)
+//        self = LinkedList(asdf)
+//    }
+//    
+////    public init(arrayLiteral elements: T...) {
+////        let wrapped = elements.map(LinkedListNode.init)
+////        appendContentsOf(wrapped)
+////    }
+//}
 
 
 
@@ -441,7 +415,7 @@ extension LinkedList: ArrayLiteralConvertible
 // MARK: - LinkedList: Printable, DebugPrintable
 //
 
-extension LinkedList: Printable, DebugPrintable
+extension LinkedList: CustomStringConvertible, CustomDebugStringConvertible
 {
     public var description: String {
         let arr = Array(self)

@@ -43,14 +43,14 @@ public class OrderedDictionarySpec
     typealias SequenceSpec   =   SequenceTypeSpec<OrderedDictionaryType>
     //    typealias ListSpec       =       ListTypeSpec<OrderedDictionaryType>
 
-    public class func registerSharedExamples(#equality:(Element?, Element?) -> Bool)
+    public class func registerSharedExamples(equality equality:(Element?, Element?) -> Bool)
     {
         sharedExamples(.OrderedDictionary) { context in
             if let args = context()["args"] as? Args {
                 let (subject, shouldMatch) = (args.subject, args.shouldMatch)
 
                 let elementsAndIndices = shouldMatch
-                let elementsOnly       = shouldMatch |> map‡ (takeRight)
+                let elementsOnly       = shouldMatch.map(takeRight)
 
                 itConformsTo(.CollectionType) <| CollectionSpec.Args(subject, shouldMatch:elementsAndIndices)
                 itConformsTo(.SequenceType)   <|   SequenceSpec.Args(subject, shouldMatch:elementsOnly)
@@ -67,8 +67,8 @@ public class OrderedDictionarySpec
                 }
 
                 it("returns the correct values for hasIndex(_:)") {
-                    let firstIndex = elementsAndIndices.first
-                    let lastIndex  = elementsAndIndices.last
+//                    let firstIndex = elementsAndIndices.first
+//                    let lastIndex  = elementsAndIndices.last
                     for (index, _) in elementsAndIndices {
                         expect(args.subject.hasIndex(index)) == true
                     }
@@ -82,7 +82,7 @@ public class OrderedDictionarySpec
 
                 it("returns a sequence of tuples in the correct order for sequence()") {
                     let seq         = Array(subject.sequence())
-                    let shouldMatch = map(elementsOnly) { ($0.key, $0.value) }
+                    let shouldMatch = elementsOnly.map { ($0.key, $0.value) }
 
                     let zipped = zipseq(seq, shouldMatch)
                     for (one, two) in zipped {

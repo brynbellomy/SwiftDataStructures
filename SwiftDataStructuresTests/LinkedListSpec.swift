@@ -39,23 +39,23 @@ public class LinkedListSpec
     typealias SequenceSpec   =   SequenceTypeSpec<LinkedListType>
 //    typealias ListSpec       =       ListTypeSpec<LinkedListType>
 
-    public class func registerSharedExamples(#equality:(InnerType?, InnerType?) -> Bool)
+    public class func registerSharedExamples(equality equality:(InnerType?, InnerType?) -> Bool)
     {
         sharedExamples(.LinkedList) { context in
             if let args = context()["args"] as? Args {
                 let (subject, shouldMatch) = (args.subject, args.shouldMatch)
 
-                let elementsAndIndices = shouldMatch
-                let elementsOnly       = shouldMatch |> map‡ (takeRight)
+                let asCollection = shouldMatch
+                let asSequence   = shouldMatch.map(takeRight)
 
-                itConformsTo(.CollectionType) <| CollectionSpec.Args(subject, shouldMatch:elementsAndIndices)
-                itConformsTo(.SequenceType)   <|   SequenceSpec.Args(subject, shouldMatch:elementsOnly)
+                itConformsTo(.CollectionType) <| CollectionSpec.Args(subject, shouldMatch:asCollection)
+                itConformsTo(.SequenceType)   <|   SequenceSpec.Args(subject, shouldMatch:asSequence)
 //                itConformsTo(.ListType)       <|       ListSpec.Args(subject, shouldMatch:elementsOnly)
 
                 it("returns the correct values for subscripts passed to at()") {
                     if shouldMatch.count > 0 {
-                        for (i, _) in enumerate(subject) {
-                            expect(subject.at(i) == elementsOnly[i])
+                        for (i, _) in subject.enumerate() {
+                            expect(subject.at(i) == asSequence[i])
                         }
                     }
                     else {

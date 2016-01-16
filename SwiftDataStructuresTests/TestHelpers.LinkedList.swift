@@ -28,7 +28,7 @@ internal class Box <T> {
 // MARK: - Test data
 //
 
-internal let testList: LinkedListType = [ "one", "two", "three", "four", ]
+internal let testList = LinkedListType([ "one", "two", "three", "four", ])
 
 internal func createTestList(count:Int) -> LinkedListType
 {

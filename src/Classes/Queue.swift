@@ -29,8 +29,11 @@ public struct Queue<T>
     /**
         Element order is [front, ..., back], as if one were to iterate through the sequence in forward order, calling `queue.enqueue(element)` on each element.
      */
-    public init<S : SequenceType where S.Generator.Element == T>(_ elements:S) {
-        extend(elements)
+    public init<S : SequenceType where S.Generator.Element == T>(_ elems:S) {
+        for elem in elems {
+            let newElement = UnderlyingCollection.NodeType(elem)
+            elements.append(newElement)
+        }
     }
 
     public mutating func enqueue(elem: Element) {
@@ -59,11 +62,11 @@ public struct Queue<T>
 
 extension Queue : SequenceType
 {
-    public typealias Generator = GeneratorOf<T>
+    public typealias Generator = AnyGenerator<T>
     public func generate() -> Generator
     {
         var generator = elements.generate()
-        return GeneratorOf {
+        return anyGenerator {
             return generator.next()?.item
         }
     }
@@ -84,8 +87,7 @@ extension Queue : MutableCollectionType
     /**
         Subscript `n` corresponds to the element that is `n` positions from the front of the queue.  Subscript 0 always corresponds to the frontmost element.
      */
-    public subscript(position:Index) -> Generator.Element
-    {
+    public subscript(position:Index) -> Generator.Element {
         get { return elements[position].item }
         set { elements[position] = UnderlyingCollection.NodeType(newValue) }
     }
@@ -97,26 +99,15 @@ extension Queue : MutableCollectionType
 // MARK: - Queue : ExtensibleCollectionType
 //
 
-extension Queue : ExtensibleCollectionType
+extension Queue : RangeReplaceableCollectionType
 {
     public mutating func reserveCapacity(n: Index.Distance) {
         elements.reserveCapacity(n)
     }
-
-    /**
-        This method is simply an alias for `enqueue()`, included for `ExtensibleCollectionType` conformance.
-     */
-    public mutating func append(newElement:Element) {
-        enqueue(newElement)
-    }
-
-
-    /**
-        Element order is [front, ..., back], as if one were to iterate through the sequence in forward order, calling `enqueue(element)` on each element.
-     */
-    public mutating func extend<S : SequenceType where S.Generator.Element == Element>(sequence: S) {
-        let wrapped = map(sequence) { UnderlyingCollection.NodeType($0) }
-        elements.extend(wrapped)
+    
+    public mutating func replaceRange<C : CollectionType where C.Generator.Element == Generator.Element>(subRange: Range<Index>, with newElements: C) {
+        let nodes = newElements.map { UnderlyingCollection.NodeType($0) }
+        elements.replaceRange(subRange, with: nodes)
     }
 }
 
@@ -126,15 +117,15 @@ extension Queue : ExtensibleCollectionType
 // MARK: - Queue : ArrayLiteralConvertible
 //
 
-extension Queue : ArrayLiteralConvertible
-{
-    /**
-        Element order is [front, ..., back], as if one were to iterate through the sequence in forward order, calling `queue.enqueue(element)` on each element.
-     */
-    public init(arrayLiteral elements: Element...) {
-        extend(elements)
-    }
-}
+//extension Queue : ArrayLiteralConvertible
+//{
+//    /**
+//        Element order is [front, ..., back], as if one were to iterate through the sequence in forward order, calling `queue.enqueue(element)` on each element.
+//     */
+//    public init(arrayLiteral elements: Element...) {
+//        appendContentsOf(elements)
+//    }
+//}
 
 
 

@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 bryn austin bellomy. All rights reserved.
 //
 
-import LlamaKit
 
 
 infix operator =?? { associativity left precedence 99 }
@@ -21,7 +20,7 @@ infix operator ?± { associativity right precedence 110 }
     The set-if-non-nil operator.  Will only set `lhs` to `rhs` if `rhs` is non-nil.
  */
 public func =?? <T>(inout lhs:T, maybeRhs: T?) {
-    if let rhs = maybeRhs? {
+    if let rhs = maybeRhs {
         lhs = rhs
     }
 }
@@ -31,7 +30,7 @@ public func =?? <T>(inout lhs:T, maybeRhs: T?) {
     The set-if-non-nil operator.  Will only set `lhs` to `rhs` if `rhs` is non-nil.
  */
 public func =?? <T>(inout lhs:T?, maybeRhs: T?) {
-    if let rhs = maybeRhs? {
+    if let rhs = maybeRhs {
         lhs = rhs
     }
 }
@@ -40,23 +39,23 @@ public func =?? <T>(inout lhs:T?, maybeRhs: T?) {
 /**
     The set-if-non-failure operator.  Will only set `lhs` to `rhs` if `rhs` is not a `Result<T>.Failure`.
  */
-public func =?? <T>(inout lhs:T, result: Result<T>) {
-    lhs =?? result.value()
+public func =?? <T, E: ErrorType> (inout lhs:T, result: Result<T, E>) {
+    lhs =?? result.value
 }
 
 
 /**
     The set-if-non-failure operator.  Will only set `lhs` to `rhs` if `rhs` is not a `Result<T>.Failure`.
  */
-public func =?? <T>(inout lhs:T?, result: Result<T>) {
-    lhs =?? result.value()
+public func =?? <T, E: ErrorType> (inout lhs:T?, result: Result<T, E>) {
+    lhs =?? result.value
 }
 
 
 /**
     The initialize-if-nil operator.  Will only set `lhs` to `rhs` if `lhs` is nil.
  */
-public func ??= <T : Any>(inout lhs:T?, rhs: @autoclosure () -> T)
+public func ??= <T: Any> (inout lhs:T?, @autoclosure rhs: () -> T)
 {
     if lhs == nil {
         lhs = rhs()
@@ -67,7 +66,7 @@ public func ??= <T : Any>(inout lhs:T?, rhs: @autoclosure () -> T)
 /**
     The initialize-if-nil operator.  Will only set `lhs` to `rhs` if `lhs` is nil.
  */
-public func ??= <T : Any>(inout lhs:T?, rhs: @autoclosure () -> T?)
+public func ??= <T: Any> (inout lhs:T?, @autoclosure rhs: () -> T?)
 {
     if lhs == nil {
         lhs = rhs()
@@ -89,9 +88,10 @@ public func ??= <T : Any>(inout lhs:T?, rhs: @autoclosure () -> T?)
 
 
 /**
-    Nil coalescing operator for `LlamaKit`'s `Result<T>` type.
+    Nil coalescing operator for `Result<T, E>`.
  */
-public func ?± <T> (lhs: T?, rhs: @autoclosure () -> Result<T>) -> Result<T>
+public func ?± <T, E: ErrorType>
+    (lhs: T?, @autoclosure rhs: () -> Result<T, E>) -> Result<T, E>
 {
     if let lhs = lhs {
         return success(lhs)
@@ -101,7 +101,8 @@ public func ?± <T> (lhs: T?, rhs: @autoclosure () -> Result<T>) -> Result<T>
     }
 }
 
-public func ?± <T> (lhs: Result<T>, rhs: @autoclosure () -> Result<T>) -> Result<T>
+public func ?± <T, E: ErrorType>
+    (lhs: Result<T, E>, @autoclosure rhs: () -> Result<T, E>) -> Result<T, E>
 {
     switch lhs {
         case .Success: return lhs
@@ -119,7 +120,7 @@ postfix operator ‡ {}
 /**
    The reverse-args-and-curry operator (type shift+option+7).  Useful in bringing the Swift stdlib collection functions into use in functional pipelines.
 
-   For example: `let lowercaseStrings = someStrings |> map‡ { $0.lowercaseString }`
+   For example: `let lowercaseStrings = someStrings |> mapTo { $0.lowercaseString }`
 */
 
 //public postfix func ‡
@@ -132,7 +133,9 @@ postfix operator ‡ {}
 public postfix func ‡
     <T, U, R>
     (f: (T, U) -> R) -> U -> T -> R {
-        return currySwap(f)
+        // @@XYZZY
+//        return currySwap(f)
+        return { x in { y in f(y, x) }}
 }
 
 

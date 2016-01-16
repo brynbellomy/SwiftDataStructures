@@ -52,11 +52,11 @@ public struct List <T>
 
 extension List : SequenceType
 {
-    public typealias Generator = GeneratorOf<T>
+    public typealias Generator = AnyGenerator<T>
     public func generate() -> Generator
     {
         var generator = elements.generate()
-        return GeneratorOf {
+        return anyGenerator {
             return generator.next()?.item
         }
     }
@@ -90,7 +90,7 @@ extension List : MutableCollectionType
 // MARK: - List : ExtensibleCollectionType
 //
 
-extension List : ExtensibleCollectionType
+extension List : RangeReplaceableCollectionType
 {
     public mutating func reserveCapacity(n: Index.Distance) {
         elements.reserveCapacity(n)
@@ -108,8 +108,13 @@ extension List : ExtensibleCollectionType
         Element order is [front, ..., back], as if one were to iterate through the sequence in forward order, calling `append(element)` on each element.
      */
     public mutating func extend<S : SequenceType where S.Generator.Element == Element>(sequence: S) {
-        let wrapped = map(sequence) { UnderlyingCollection.NodeType($0) }
-        elements.extend(wrapped)
+        let wrapped = sequence.map { UnderlyingCollection.NodeType($0) }
+        elements.appendContentsOf(wrapped)
+    }
+    
+    public mutating func replaceRange<C : CollectionType where C.Generator.Element == Generator.Element>(subRange: Range<Index>, with newElements: C) {
+        let nodes = newElements.map { UnderlyingCollection.NodeType($0) }
+        elements.replaceRange(subRange, with: nodes)
     }
 }
 

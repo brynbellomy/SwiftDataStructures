@@ -19,14 +19,14 @@ public enum TestTypes: String, ISpecType
 }
 
 public func itBehavesLike(type:TestTypes) (specArgs:AnyObject) {
-    itBehavesLike(type, specArgs: specArgs)
+    itBehavesLike(type, specArgs)
 }
 
 
 public func sharedExamples(spec:TestTypes, closure: SharedExampleClosure)
 {
     // look up shared spec by name and run it
-    sharedExamples(spec.specName, closure)
+    sharedExamples(spec.specName, closure: closure)
 }
 
 

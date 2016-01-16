@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 bryn austin bellomy. All rights reserved.
 //
 
-import LlamaKit
 
 
 /**
@@ -17,8 +16,7 @@ infix operator <*> { associativity left precedence 101 }
 
 public func <*>
     <A, B>
-    (f: (A -> B)?, maybeValue: A?)
-    -> B?
+    (f: (A -> B)?, maybeValue: A?) -> B?
 {
     switch f
     {
@@ -29,9 +27,8 @@ public func <*>
 
 
 public func <*>
-    <A, B>
-    (f: Result<A -> B>, values: Result<A>)
-    -> Result<B>
+    <A, B, E: ErrorType>
+    (f: Result<A -> B, E>, values: Result<A, E>) -> Result<B, E>
 {
     return f.flatMap { fn in values.flatMap(fn >>> success) }
 }

@@ -31,21 +31,21 @@ class LinkedListTests: QuickSpec
             }
 
             context("initialized from an array literal") {
-                let list: LinkedListType = [ "one", "two", "three", ]
+                let list = LinkedListType([ "one", "two", "three", ])
 
                 itBehavesLike(.LinkedList) <| LinkedListSpec.Args(list, shouldMatch:[(0, Node1), (1, Node2), (2, Node3),])
             }
 
             context("initialized from a sequence of LinkedListNodes") {
-                let seq  = SequenceOf([ Node1, Node2, Node3, ])
-                var list = LinkedListType(seq)
+                let seq  = AnySequence([ Node1, Node2, Node3, ])
+                let list = LinkedListType(seq)
 
                 itBehavesLike(.LinkedList) <| LinkedListSpec.Args(list, shouldMatch:[(0, Node1), (1, Node2), (2, Node3),])
             }
 
             context("initialized from a sequence of Ts") {
                 let arr  =  [ "one", "two", "three", ]
-                var list = LinkedListType(elements:SequenceOf(arr))
+                let list = LinkedListType(AnySequence(arr))
 
                 itBehavesLike(.LinkedList) <| LinkedListSpec.Args(list, shouldMatch:[(0, Node1), (1, Node2), (2, Node3),])
             }
@@ -53,14 +53,14 @@ class LinkedListTests: QuickSpec
 
         describe("a LinkedList") {
             it("returns the correct indices when find() is called and an element satisfies predicate") {
-                let list: LinkedListType = [ "one", "two", "three", ]
+                let list = LinkedListType([ "one", "two", "three", ])
                 let node = list[1]
                 let index = list.find { $0 === node }
                 expect(index) == 1
             }
 
             it("returns nil when find() is called and no elements satisfy the predicate") {
-                let list: LinkedListType = [ "one", "two", "three", ]
+                let list = LinkedListType([ "one", "two", "three", ])
                 let index = list.find { $0.item == "xyzzy" }
                 expect(index).to(beNil())
             }
@@ -75,7 +75,7 @@ class LinkedListMutatingTests : XCTestCase
 {
     func testSubscriptSetter()
     {
-        var list: LinkedList<Int> = [9, 8, 7]
+        var list = LinkedList([9, 8, 7])
 
         list[0] = LinkedListNode(10)
         list[1] = LinkedListNode(20)
@@ -91,7 +91,7 @@ class LinkedListMutatingTests : XCTestCase
 
     func testAppend()
     {
-        var list: LinkedList<Int> = [10, 20]
+        var list = LinkedList([10, 20])
 
         list.append(LinkedListNode(30))
 
@@ -105,7 +105,7 @@ class LinkedListMutatingTests : XCTestCase
 
     func testPrepend()
     {
-        var list: LinkedList<Int> = [20, 30]
+        var list = LinkedList([20, 30])
 
         list.prepend(LinkedListNode(10))
 
@@ -119,7 +119,7 @@ class LinkedListMutatingTests : XCTestCase
 
     func testInsert()
     {
-        var list: LinkedList<Int> = [10, 30]
+        var list = LinkedList([10, 30])
 
         let index = 1
         list.insert(LinkedListNode(20), atIndex:index)
@@ -134,7 +134,7 @@ class LinkedListMutatingTests : XCTestCase
 
     func testRemoveAtIndexFirst()
     {
-        var list: LinkedList<Int> = [10, 20, 30]
+        var list = LinkedList([10, 20, 30])
 
         let index = 0
         let element = list[index]
@@ -151,7 +151,7 @@ class LinkedListMutatingTests : XCTestCase
 
     func testRemoveAtIndexN()
     {
-        var list: LinkedList<Int> = [10, 20, 30]
+        var list = LinkedList([10, 20, 30])
 
         let index = 1
         let element = list[index]
@@ -168,7 +168,7 @@ class LinkedListMutatingTests : XCTestCase
 
     func testRemoveAtIndexLast()
     {
-        var list: LinkedList<Int> = [10, 20, 30]
+        var list = LinkedList([10, 20, 30])
 
         let index = 2
         let element = list[index]
@@ -185,11 +185,11 @@ class LinkedListMutatingTests : XCTestCase
 
     func testSplice()
     {
-        var list: LinkedListType = [Node1.item, Node2.item, Node3.item,]
-        let newElements: LinkedListType = [Node4.item, Node1.item,]
+        var list = LinkedListType([Node1.item, Node2.item, Node3.item,])
+        let newElements = LinkedListType([Node4.item, Node1.item,])
 
-        list.splice(newElements, atIndex:1)
-        let expected: LinkedListType = [Node1.item, Node4.item, Node1.item, Node2.item, Node3.item]
+        list.insertContentsOf(newElements, at:1)
+        let expected = LinkedListType([Node1.item, Node4.item, Node1.item, Node2.item, Node3.item])
         XCTAssert(list == expected)
     }
 }

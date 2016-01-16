@@ -12,11 +12,11 @@ import Foundation
 /**
     Returns a random Float value between min and max (inclusive).
 
-    :param: min
-    :param: max
-    :returns: Random number
+    - parameter min:
+    - parameter max:
+    - returns: Random number
 */
-public func random(min: Float = 0, #max: Float) -> Float
+public func random(min: Float = 0, max: Float) -> Float
 {
     let diff = max - min
     let rand = Float(arc4random() % (UInt32(RAND_MAX) + 1))
@@ -24,9 +24,8 @@ public func random(min: Float = 0, #max: Float) -> Float
 }
 
 
-public func sum
-    <S: SequenceType where S.Generator.Element: IntegerType>
+public func sum <S: SequenceType where S.Generator.Element: IntegerType>
     (nums: S) -> S.Generator.Element
 {
-    return reduce(nums, 0) { $0.0 + $0.1 }
+    return nums.reduce(0) { $0.0 + $0.1 }
 }

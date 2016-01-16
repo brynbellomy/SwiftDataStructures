@@ -1,0 +1,6 @@
+framework module Respect {
+  umbrella header "Respect-umbrella.h"
+
+  export *
+  module * { export * }
+}

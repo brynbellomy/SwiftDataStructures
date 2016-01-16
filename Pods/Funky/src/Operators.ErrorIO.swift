@@ -11,12 +11,17 @@ import Foundation
 
 infix operator <~ { associativity left }
 
-public func <~ (var lhs:ErrorIO, rhs:NSError) -> ErrorIO {
+public func <~ (lhs:ErrorIO, rhs:NSError) -> ErrorIO {
     lhs.append(rhs)
     return lhs
 }
 
-public func <~ (var lhs:ErrorIO, rhs:ErrorIO) -> ErrorIO {
+public func <~ (lhs:ErrorIO, rhs:String) -> ErrorIO {
+    lhs.append(ErrorIO.defaultError(message:rhs))
+    return lhs
+}
+
+public func <~ (lhs:ErrorIO, rhs:ErrorIO) -> ErrorIO {
     lhs.extend(rhs)
     return lhs
 }

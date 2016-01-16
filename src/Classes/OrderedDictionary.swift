@@ -1,6 +1,6 @@
 //
 //  OrderedDictionary.swift
-//  BrynSwift
+//  SwiftDataStructures
 //
 //  Created by bryn austin bellomy on 2014 Nov 6.
 //  Copyright (c) 2014 bryn austin bellomy. All rights reserved.
@@ -29,8 +29,8 @@ public struct OrderedDictionary <K: Hashable, V> //: ListType
     public var count   : Index.Distance { return elements.count }
     public var isEmpty : Bool           { return count == 0 }
 
-    public var keys:   [K] { return map(generateTuples()) { key, _   in key   } }
-    public var values: [V] { return map(generateTuples()) { _, value in value } }
+    public var keys:   [K] { return generateTuples().map { key, _   in key   } }
+    public var values: [V] { return generateTuples().map { _, value in value } }
 
 
     //
@@ -41,7 +41,11 @@ public struct OrderedDictionary <K: Hashable, V> //: ListType
     }
 
     public init <S: SequenceType where S.Generator.Element == Element>(_ elements:S) {
-        extend(elements)
+        appendContentsOf(elements)
+    }
+    
+    public init <S: SequenceType where S.Generator.Element == (K, V)>(_ elements:S) {
+        appendContentsOf( elements.map { Element(key: $0.0, value: $0.1) } )
     }
 
     //
@@ -113,7 +117,7 @@ public struct OrderedDictionary <K: Hashable, V> //: ListType
         return elements.removeAtIndex(index).item
     }
 
-    public mutating func removeAll(#keepCapacity:Bool) {
+    public mutating func removeAll(keepCapacity keepCapacity:Bool) {
         elements.removeAll(keepCapacity: keepCapacity)
     }
 
@@ -134,8 +138,8 @@ public struct OrderedDictionary <K: Hashable, V> //: ListType
         order.  `sequence()` returns a sequence whose elements are key-value pairs.  The sequence's order
         is the same as the `OrderedDictionary`.
     */
-    public func sequence() -> SequenceOf<(Key, Value)> {
-        return SequenceOf(generateTuples())
+    public func sequence() -> AnySequence<(Key, Value)> {
+        return AnySequence(generateTuples())
     }
 }
 
@@ -147,17 +151,17 @@ public struct OrderedDictionary <K: Hashable, V> //: ListType
 
 extension OrderedDictionary: SequenceType
 {
-    public typealias Generator = GeneratorOf<Element>
+    public typealias Generator = AnyGenerator<Element>
     public func generate() -> Generator
     {
         var generator = elements.generate()
-        return GeneratorOf { generator.next()?.item }
+        return anyGenerator { generator.next()?.item }
     }
 
-    public func generateTuples() -> GeneratorOf<(Key, Value)>
+    public func generateTuples() -> AnyGenerator<(Key, Value)>
     {
-        var generator = generate()
-        return GeneratorOf { generator.next()?.asTuple() ?? nil }
+        let generator = generate()
+        return anyGenerator { generator.next()?.asTuple() ?? nil }
     }
 }
 
@@ -217,7 +221,7 @@ extension OrderedDictionary: MutableCollectionType
 // MARK: - OrderedDictionary: ExtensibleCollectionType
 //
 
-extension OrderedDictionary: ExtensibleCollectionType
+extension OrderedDictionary: RangeReplaceableCollectionType
 {
     public typealias KeyValueTuple = (Key, Value)
 
@@ -236,14 +240,19 @@ extension OrderedDictionary: ExtensibleCollectionType
         elements.append(wrapped)
     }
 
-    public mutating func extend <S: SequenceType where S.Generator.Element == Element> (sequence: S) {
-        let mapped = map(sequence) { LinkedListType.NodeType($0) }
-        elements.extend(mapped)
+    public mutating func appendContentsOf <S: SequenceType where S.Generator.Element == Element> (sequence: S) {
+        let mapped = sequence.map(LinkedListType.NodeType.init)
+        elements.appendContentsOf(mapped)
     }
 
     public mutating func extendTuples <S: SequenceType where S.Generator.Element == KeyValueTuple> (sequence: S) {
-        let mapped = map(sequence) { tpl in Element(key:tpl.0, value: tpl.1) }
-        extend(mapped)
+        let mapped = sequence.map { tpl in Element(key:tpl.0, value: tpl.1) }
+        appendContentsOf(mapped)
+    }
+    
+    public mutating func replaceRange<C : CollectionType where C.Generator.Element == Generator.Element>(subRange: Range<Index>, with newElements: C) {
+        let nodes = newElements.map { LinkedListType.NodeType($0) }
+        elements.replaceRange(subRange, with: nodes)
     }
 }
 
@@ -253,13 +262,13 @@ extension OrderedDictionary: ExtensibleCollectionType
 // MARK: - OrderedDictionary: DictionaryLiteralConvertible
 //
 
-extension OrderedDictionary: DictionaryLiteralConvertible
-{
-    public init(dictionaryLiteral elements: (Key, Value)...) {
-        let mapped = map(elements) { key, value in OrderedDictionaryElement(key:key, value:value) }
-        extend(mapped)
-    }
-}
+//extension OrderedDictionary: DictionaryLiteralConvertible
+//{
+//    public init(dictionaryLiteral elements: (Key, Value)...) {
+//        let mapped = elements.map { key, value in OrderedDictionaryElement(key:key, value:value) }
+//        appendContentsOf(mapped)
+//    }
+//}
 
 
 //

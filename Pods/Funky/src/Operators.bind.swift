@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 bryn austin bellomy. All rights reserved.
 //
 
-import LlamaKit
 
 
 /**
@@ -17,68 +16,56 @@ infix operator -<< { associativity left precedence 150 }
 
 
 public func >>-
-    <A, B>
-    (maybeValue: A?, f: A -> B?)
-    -> B?
+    <A, B> (maybeValue: A?, f: A -> B?) -> B?
 {
-    switch maybeValue
-    {
-        case .Some(let x): return f(x)
-        case .None: return .None
-    }
+    return maybeValue.flatMap(f)
 }
 
 
 public func >>-
-    <A, B>
-    (wrapped: [A], f: A -> [B])
-    -> [B]
+    <A, B> (wrapped: [A], f: A -> [B]) -> [B]
 {
     return wrapped.map(f).reduce([], combine: +)
 }
 
 
 public func >>-
-    <A, B>
-    (maybeValue: Result<A>, f: A -> Result<B>)
-    -> Result<B>
+    <A, B, E>
+    (maybeValue: Result<A, E>, f: A -> Result<B, E>) -> Result<B, E>
 {
     switch maybeValue {
         case .Success(let box): return f(box.unbox)
-        case .Failure(let err): return failure(err)
+        case .Failure(let err): return Result.Failure(err)
     }
 }
 
-public func >>-
-    <E>
-    (maybeValue: Result<()>, f: () -> Result<()>)
-    -> Result<()>
+
+public func >>- <E>
+    (maybeValue: Result<(), E>, f: () -> Result<(), E>) -> Result<(), E>
 {
     switch maybeValue {
         case .Success:          return f()
-        case .Failure(let box): return failure(box)
+        case .Failure(let box): return Result.Failure(box)
     }
 }
 
 
-public func >>-
-    <E>
-    (maybeValue: Result<Bool>, f: () -> Result<Bool>)
-    -> Result<Bool>
+public func >>- <E>
+    (maybeValue: Result<Bool, E>, f: () -> Result<Bool, E>) -> Result<Bool, E>
 {
     switch maybeValue {
         case .Success:          return f()
-        case .Failure(let err): return failure(err)
+        case .Failure(let err): return Result.Failure(err)
     }
 }
 
 
-public func -<< <A, B> (f:A -> Result<B>, maybeValue:Result<A>) -> Result<B>
+public func -<< <A, B, E> (f:A -> Result<B, E>, maybeValue:Result<A, E>) -> Result<B, E>
 {
 
     switch maybeValue {
         case .Success(let box): return f(box.unbox)
-        case .Failure(let err): return failure(err)
+        case .Failure(let err): return Result.Failure(err)
     }
 }
 

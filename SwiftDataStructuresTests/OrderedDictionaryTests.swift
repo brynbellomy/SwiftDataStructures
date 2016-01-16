@@ -23,14 +23,14 @@ class OrderedDictionaryTests: QuickSpec
         describe("a new OrderedDictionary") {
 
             context("initialized from a [K: V] dictionary literal") {
-                var dict: OrderedDictionaryType = ["one":"first value", "two":"second value", "three":"third value",]
+                let dict = OrderedDictionaryType([("one","first value"), ("two","second value"), ("three","third value"),])
 
                 itBehavesLike(.OrderedDictionary) <| OrderedDictionarySpec.Args(dict, shouldMatch:[(0, Element1), (1, Element2), (2, Element3),])
             }
 
             context("initialized from a sequence of Elements") {
                 let arr  = [ Element1, Element2, Element3, ]
-                let dict = OrderedDictionaryType(SequenceOf(arr))
+                let dict = OrderedDictionaryType(AnySequence(arr))
 
                 itBehavesLike(.OrderedDictionary) <| OrderedDictionarySpec.Args(dict, shouldMatch:[(0, Element1), (1, Element2), (2, Element3),])
             }
@@ -86,12 +86,12 @@ private func itConformsTo (proto:ProtocolSpecType) (specArgs:AnyObject) {
 
 func createTestDictionary(count:Int) -> OrderedDictionaryType
 {
-    let testDictionary: OrderedDictionaryType = [
-        "one": "first value",
-        "two": "second value",
-        "three": "third value",
-        "four": "fourth value",
-    ]
+    let testDictionary = OrderedDictionaryType([
+        ("one", "first value"),
+        ("two", "second value"),
+        ("three", "third value"),
+        ("four", "fourth value"),
+    ])
 
     var dict = OrderedDictionaryType()
     for i in 0 ..< count {
