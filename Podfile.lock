@@ -1,8 +1,8 @@
 PODS:
   - Funky (0.3.0):
     - Regex (= 0.3.0)
-  - Nimble (3.0.0)
-  - Quick (0.8.0)
+  - Nimble (3.1.0)
+  - Quick (0.9.1)
   - Regex (0.3.0)
   - Respect (0.0.1):
     - Nimble
@@ -10,32 +10,22 @@ PODS:
 
 DEPENDENCIES:
   - Funky (= 0.3.0)
-  - Nimble (from `https://github.com/Quick/Nimble.git`)
-  - Quick (from `https://github.com/Quick/Quick.git`)
+  - Nimble
+  - Quick
   - Regex (= 0.3.0)
   - Respect (from `~/projects/_swift/Respect`)
 
 EXTERNAL SOURCES:
-  Nimble:
-    :git: https://github.com/Quick/Nimble.git
-  Quick:
-    :git: https://github.com/Quick/Quick.git
   Respect:
     :path: "~/projects/_swift/Respect"
 
-CHECKOUT OPTIONS:
-  Nimble:
-    :commit: 676d1c8aedd09253229474a5dca2fddbf3b445a1
-    :git: https://github.com/Quick/Nimble.git
-  Quick:
-    :commit: 46b38c9c06b068baede09586aa281a6f075b2494
-    :git: https://github.com/Quick/Quick.git
-
 SPEC CHECKSUMS:
   Funky: ed6dbc079d41b3e5ad4e0cd87059b925b5641547
-  Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
-  Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
+  Nimble: 79d40f4d69d47314229bbabacaa02b8838c779b9
+  Quick: a5221fc21788b6aeda934805e68b061839bc3165
   Regex: 6bfb554ad7d5b1be9cfc57ab1fe2fb6cee45a344
   Respect: 435b3053397ee26aad27e39ef07ff8305a21d22c
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 4a6d2f76bf0ae222fb06982fed9cd37b92714285
+
+COCOAPODS: 1.0.0.beta.3

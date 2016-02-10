@@ -2,8 +2,8 @@
 //  SwiftDataStructures.h
 //  SwiftDataStructures
 //
-//  Created by bryn austin bellomy on 2014 Dec 17.
-//  Copyright (c) 2014 bryn austin bellomy. All rights reserved.
+//  Created by bryn austin bellomy on 2016 Feb 9.
+//  Copyright © 2016 illuminator. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

@@ -85,9 +85,11 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-SwiftDataStructuresTests/Nimble.framework"
+  install_framework "Pods-SwiftDataStructuresTests/Quick.framework"
   install_framework "Pods-SwiftDataStructuresTests/Respect.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-SwiftDataStructuresTests/Nimble.framework"
+  install_framework "Pods-SwiftDataStructuresTests/Quick.framework"
   install_framework "Pods-SwiftDataStructuresTests/Respect.framework"
 fi

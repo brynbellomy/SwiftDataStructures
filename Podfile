@@ -11,7 +11,7 @@ end
 target :SwiftDataStructuresTests do
     pod 'Quick'
     pod 'Nimble'
-    pod 'Respect'
+    pod 'Respect', :path => '~/projects/_swift/Respect'
 end
 
 
